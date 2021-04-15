@@ -1,0 +1,50 @@
+<!DOCTYPE>
+<html>
+    <head>
+        <title>Battle bot royale</title>
+        <style>
+            body{
+                background-color: #002233;
+            }
+            .host, .guest{
+                position: absolute;
+                height: 20vh;
+                width: 20vw;
+                top: 40vh;
+                color: white;
+                display: flex;
+                border-radius: 5px;
+
+            }
+            h1{
+                margin: auto;
+                /*display: block;*/
+                font-size: 3em;
+            }
+            .host{
+                background-color: darkgoldenrod;
+                right: 20vw;
+            }
+            .guest{
+                background-color: crimson;
+                left: 20vw;
+            }
+            div>h1>a::after{
+                content: "";
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                top: 0;
+                left: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="host">
+            <h1><a href="ClientePadre.html"></a>Crear sala</h1>
+        </div>
+        <div class="guest">
+            <h1><a href="ClienteHija.html"></a>Unirse a una sala</h1>
+        </div>
+    </body>
+</html>

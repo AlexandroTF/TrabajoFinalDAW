@@ -1,0 +1,151 @@
+<!DOCTYPE>
+<html>
+    <head>
+        <title>Battle bot royale</title>
+        <!-- -------------------------------------------------------------------------------------------------- -->
+        <!-- https://code.tutsplus.com/es/tutorials/how-to-create-a-simple-web-based-chat-application--net-5931 -->
+        <!-- -------------------------------------------------------------------------------------------------- -->
+        <style>
+            body{
+                background-color: #002233;
+            }
+            .host, .guest{
+                position: absolute;
+                height: 20vh;
+                width: 60vw;
+                top: 40vh;
+                color: white;
+                display: flex;
+                border-radius: 5px;
+
+            }
+            h1, form{
+                margin: auto;
+                /*display: block;*/
+                font-size: 4vh;
+                color: white;
+            }
+            .host{
+                background-color: darkgoldenrod;
+                right: 20vw;
+            }
+            .guest{
+                background-color: crimson;
+                left: 20vw;
+            }
+            div>h1>a::after{
+                content: "";
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                top: 0;
+                left: 0;
+            }
+            .cont{
+                top: 15vh;
+                padding:1em;
+                height: 70vh;
+            }
+            #nom{
+                border-radius: 5px;
+                height: 10vh;
+                width: 55vw;
+                font-size: 1.5em;
+                text-align: center;
+                background: #8888;
+            }
+            .upload{
+                position: relative;
+                /*border-radius: 100em;*/
+                height: 20vw;
+                width: 20vw;
+                /*background-color: thistle;*/  
+                display: block;
+                margin: 0.5em auto;
+            }
+            .upload>label>img{
+                border-radius: 100em;
+                height: 20vw;
+                width: 20vw;
+            }
+            #avatar, #btnsubir{
+                height: 5vw;
+                width: 5vw;
+                background-color: turquoise;
+                border-radius: 100em;
+                position: absolute;
+                bottom: 0px;
+                right: 0px;
+            }
+            #avatar{
+                opacity: 0%;
+            }
+            input#nom{
+                color: whitesmoke;
+                font-family: 'Lora', serif;
+            }
+            .ok{
+                position: relative;
+                bottom: 2em;
+                right: 2em;
+                padding: 0 2em;
+                background-color: #ffe4c4;
+                border-radius: 10px;
+                color: black;
+            }
+            .ok:active{
+                background-color: #c4b097;
+                bottom: 1.8em;
+            }
+        </style>
+        <script>
+            //alert("Se viene la batalla");
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            //alert(queryString);
+            /*const color = urlParams.get('color');
+            alert(color);
+            const ojo = urlParams.get('ojo');
+            alert(ojo);*/
+        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <div class="guest cont">
+            <div class="chat">
+                <!-- Aqui se verá el chat -->
+            </div>
+            <div class="ok">
+                <p>Enviar</p>
+            </div>
+            <div class="ok">
+                <p>Enviar</p>
+            </div>
+            <div class="ok">
+                <p>Enviar</p>
+            </div>
+            <div class="ok">
+                <p>Enviar</p>
+            </div>
+        </div>
+    </body>
+    <script>
+        // const btnok = document.getElementsByClassName("ok")[0];
+        // const btnok = $(".ok")[0];
+        // btnok.addEventListener("click", fnActualizarChat, false);
+        $(".ok").click(fnActualizarChat);
+
+        function fnActualizarChat(){
+            console.log("imagen subida");
+            // $.ajax({
+            //     url: "chatlog.txt",
+            //     cache: false,
+            //     success: function(html){		
+            //         $(".chat")[0].html(html); //Insert chat log into the #chatbox div
+            //         console.log(html); //Insert chat log into the console.log
+            //     },
+            // });
+        }
+        //Y cuando le de a enviar que haga una peticion ajax, envia la imagen, el nombre y el codigo de sala
+    </script>
+</html>

@@ -113,16 +113,19 @@
                 bottom: 7em;
             }
             .showpeople{
-                /* border: solid black 1px; */
+                border: solid black 1px;
                 position: absolute;
-                left: 10%;
-                top: 30%;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
                 display: flex;
                 width: 80%;
-                height: auto;
+                height: 50%;
                 margin: auto;
                 flex-wrap: wrap;
                 font-size: 1.2em;
+                overflow: scroll;
+                justify-content: space-around;
                 /* transform: scale(0.7); */
             }
             .equipo{
@@ -130,26 +133,35 @@
                 /* padding: 1%; */
                 background-color: #0008;
                 margin: 1%;
-                height: 12%;
-                width: 30%;
+                /* height: 12%;
+                width: 30%; */
                 /* transform: scale(0.7); */
             }
             .persona{
                 /*border: solid white 1px;*/
-                display: inline-block;
-                padding: 0.5%;
-                width: 30%;
-                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-content: center;
+                padding: 2.5px;
+                margin: 2.5px;
+                /* width: 30%;
+                height: 100%; */
                 background-color: #0008;
             }
             .persona>img{
                 height: 5em;
                 width: 5em;
                 border-radius: 100%;
-                margin: auto;
+                /* margin: auto; */
                 display: block;
             }
+            p.mininame{
+                margin: auto;
+            }
             /* https://codepen.io/chriscoyier/pen/VvRoWy */
+            .showpeople::-webkit-scrollbar {
+                width: 0px;
+            }
         </style>
         <script>
             //alert("Se viene la batalla");
@@ -161,163 +173,266 @@
             const ojo = urlParams.get('ojo');
             alert(ojo);*/
         </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </head>
     <body>
         <div class="host cont">
             <h1 class="code">ABCDEF</h1>
             <div class="showpeople">
-                <div class="equipo">
+                <!-- <div class="equipo">
                     <div class="persona">
                         <img src="C:/Users/Desarrollo/Pictures/Imagenes%20de%20ejemplo/612-200x200.jpg" class="miniavatar">
-                        <p class="mininame">Sample name</p>
+                        <p class="mininame">Tulip Olsen</p>
                     </div>
                     <div class="persona">
                         <img src="C:/Users/Desarrollo/Pictures/Imagenes%20de%20ejemplo/612-200x200.jpg" class="miniavatar">
-                        <p class="mininame">Sample name</p>
+                        <p class="mininame">Atticus</p>
                     </div>
                     <div class="persona">
                         <img src="C:/Users/Desarrollo/Pictures/Imagenes%20de%20ejemplo/612-200x200.jpg" class="miniavatar">
-                        <p class="mininame">Sample name</p>
+                        <p class="mininame">One One</p>
                     </div>
                 </div>
                 
                 <div class="equipo">
                     <div class="persona">
                         <img src="C:/Users/Desarrollo/Pictures/Imagenes%20de%20ejemplo/612-200x200.jpg" class="miniavatar">
-                        <p class="mininame">Sample name</p>
+                        <p class="mininame">Jesse Cosay</p>
                     </div>
                     <div class="persona">
                         <img src="C:/Users/Desarrollo/Pictures/Imagenes%20de%20ejemplo/612-200x200.jpg" class="miniavatar">
-                        <p class="mininame">Sample name</p>
+                        <p class="mininame">Lake</p>
                     </div>
                     <div class="persona">
                         <img src="C:/Users/Desarrollo/Pictures/Imagenes%20de%20ejemplo/612-200x200.jpg" class="miniavatar">
-                        <p class="mininame">Sample name</p>
+                        <p class="mininame">Alan Dracula</p>
                     </div>
                 </div>
                 <div class="equipo">
                     <div class="persona">
                         <img src="C:/Users/Desarrollo/Pictures/Imagenes%20de%20ejemplo/612-200x200.jpg" class="miniavatar">
-                        <p class="mininame">Sample name</p>
+                        <p class="mininame">Grace Monroe</p>
                     </div>
                     <div class="persona">
                         <img src="C:/Users/Desarrollo/Pictures/Imagenes%20de%20ejemplo/612-200x200.jpg" class="miniavatar">
-                        <p class="mininame">Sample name</p>
+                        <p class="mininame">Simon Laurent</p>
                     </div>
                     <div class="persona">
                         <img src="C:/Users/Desarrollo/Pictures/Imagenes%20de%20ejemplo/612-200x200.jpg" class="miniavatar">
-                        <p class="mininame">Sample name</p>
+                        <p class="mininame">Hazel Null</p>
                     </div>
                 </div>
                 <div class="equipo">
                     <div class="persona">
                         <img src="C:/Users/Desarrollo/Pictures/Imagenes%20de%20ejemplo/612-200x200.jpg" class="miniavatar">
-                        <p class="mininame">Sample name</p>
+                        <p class="mininame">Kezz</p>
                     </div>
                     <div class="persona">
                         <img src="C:/Users/Desarrollo/Pictures/Imagenes%20de%20ejemplo/612-200x200.jpg" class="miniavatar">
-                        <p class="mininame">Sample name</p>
+                        <p class="mininame">Min-gi Park</p>
                     </div>
                     <div class="persona">
                         <img src="C:/Users/Desarrollo/Pictures/Imagenes%20de%20ejemplo/612-200x200.jpg" class="miniavatar">
-                        <p class="mininame">Sample name</p>
+                        <p class="mininame">Ryan Akagi</p>
                     </div>
                 </div>
                 <div class="equipo">
                     <div class="persona">
                         <img src="C:/Users/Desarrollo/Pictures/Imagenes%20de%20ejemplo/612-200x200.jpg" class="miniavatar">
-                        <p class="mininame">Sample name</p>
+                        <p class="mininame">Amelia Hughes</p>
                     </div>
                     <div class="persona">
                         <img src="C:/Users/Desarrollo/Pictures/Imagenes%20de%20ejemplo/612-200x200.jpg" class="miniavatar">
-                        <p class="mininame">Sample name</p>
+                        <p class="mininame">Samantha</p>
                     </div>
                     <div class="persona">
                         <img src="C:/Users/Desarrollo/Pictures/Imagenes%20de%20ejemplo/612-200x200.jpg" class="miniavatar">
-                        <p class="mininame">Sample name</p>
+                        <p class="mininame">Randall</p>
                     </div>
                 </div>
                 <div class="equipo">
                     <div class="persona">
                         <img src="C:/Users/Desarrollo/Pictures/Imagenes%20de%20ejemplo/612-200x200.jpg" class="miniavatar">
-                        <p class="mininame">Sample name</p>
+                        <p class="mininame">R2DRos</p>
                     </div>
                     <div class="persona">
                         <img src="C:/Users/Desarrollo/Pictures/Imagenes%20de%20ejemplo/612-200x200.jpg" class="miniavatar">
-                        <p class="mininame">Sample name</p>
+                        <p class="mininame">Cova</p>
                     </div>
                     <div class="persona">
                         <img src="C:/Users/Desarrollo/Pictures/Imagenes%20de%20ejemplo/612-200x200.jpg" class="miniavatar">
-                        <p class="mininame">Sample name</p>
+                        <p class="mininame">Estherdm_</p>
                     </div>
                 </div>
                 <div class="equipo">
                     <div class="persona">
                         <img src="C:/Users/Desarrollo/Pictures/Imagenes%20de%20ejemplo/612-200x200.jpg" class="miniavatar">
-                        <p class="mininame">Sample name</p>
+                        <p class="mininame">Elena580</p>
                     </div>
                     <div class="persona">
                         <img src="C:/Users/Desarrollo/Pictures/Imagenes%20de%20ejemplo/612-200x200.jpg" class="miniavatar">
-                        <p class="mininame">Sample name</p>
+                        <p class="mininame">IselPH</p>
                     </div>
                     <div class="persona">
                         <img src="C:/Users/Desarrollo/Pictures/Imagenes%20de%20ejemplo/612-200x200.jpg" class="miniavatar">
-                        <p class="mininame">Sample name</p>
+                        <p class="mininame">Hirune</p>
                     </div>
                 </div>
                 <div class="equipo">
                     <div class="persona">
                         <img src="C:/Users/Desarrollo/Pictures/Imagenes%20de%20ejemplo/612-200x200.jpg" class="miniavatar">
-                        <p class="mininame">Sample name</p>
+                        <p class="mininame">MaryJoe</p>
                     </div>
                     <div class="persona">
                         <img src="C:/Users/Desarrollo/Pictures/Imagenes%20de%20ejemplo/612-200x200.jpg" class="miniavatar">
-                        <p class="mininame">Sample name</p>
+                        <p class="mininame">Galletana</p>
                     </div>
                     <div class="persona">
                         <img src="C:/Users/Desarrollo/Pictures/Imagenes%20de%20ejemplo/612-200x200.jpg" class="miniavatar">
-                        <p class="mininame">Sample name</p>
+                        <p class="mininame">GuilleViejo</p>
                     </div>
                 </div>
                 <div class="equipo">
                     <div class="persona">
                         <img src="C:/Users/Desarrollo/Pictures/Imagenes%20de%20ejemplo/612-200x200.jpg" class="miniavatar">
-                        <p class="mininame">Sample name</p>
+                        <p class="mininame">Aitor</p>
                     </div>
                     <div class="persona">
                         <img src="C:/Users/Desarrollo/Pictures/Imagenes%20de%20ejemplo/612-200x200.jpg" class="miniavatar">
-                        <p class="mininame">Sample name</p>
+                        <p class="mininame">Lucero</p>
                     </div>
                     <div class="persona">
                         <img src="C:/Users/Desarrollo/Pictures/Imagenes%20de%20ejemplo/612-200x200.jpg" class="miniavatar">
-                        <p class="mininame">Sample name</p>
+                        <p class="mininame">Raulo</p>
                     </div>
                 </div>
                 <div class="equipo">
                     <div class="persona">
                         <img src="C:/Users/Desarrollo/Pictures/Imagenes%20de%20ejemplo/612-200x200.jpg" class="miniavatar">
-                        <p class="mininame">Sample name</p>
+                        <p class="mininame">Saicere</p>
                     </div>
                     <div class="persona">
                         <img src="C:/Users/Desarrollo/Pictures/Imagenes%20de%20ejemplo/612-200x200.jpg" class="miniavatar">
-                        <p class="mininame">Sample name</p>
+                        <p class="mininame">MeriRP</p>
                     </div>
                     <div class="persona">
                         <img src="C:/Users/Desarrollo/Pictures/Imagenes%20de%20ejemplo/612-200x200.jpg" class="miniavatar">
-                        <p class="mininame">Sample name</p>
+                        <p class="mininame">Samuu</p>
                     </div>
-                </div>
+                </div> -->
             </div>
             <div class="ok">
                 <p>Empezar</p>
             </div>
             <div class="addbot">
-                <p>Añadir bot</p>
+                <p>Añadir participante</p>
             </div>
             
         </div>
     </body>
     <script>
         //actualizar y añadir gente
+        $(".addbot").on("click", ()=>{
+            let nombre = prompt("Nombre");
+            let imagen = prompt("ruta imagen");
+            participantes[0][participantes[0].length] = nombre;
+            participantes[1][participantes[1].length] = imagen;
+            fnActualizarLista(nombre, imagen);
+            //console.log(participantes)
+            //fnActualizarLista();
+        })
+        //let participantes = [[],[]]
+        let participantes = [["Agente 1", "Agente A", "AGENTE", "etnegA", "aGENTE CAPS", "Agenten't"],["https://picsum.photos/200/300", "https://picsum.photos/200/300", "https://picsum.photos/200/300", "https://picsum.photos/300/200", "https://picsum.photos/200/300", "https://picsum.photos/200/300"]]
+        fnCrearLista()
+        
+        $("img.miniavatar").on("click", fnExpulsarJugador)
+
+
+        function fnCrearLista(){
+            const cont = $(".showpeople")[0]
+            //
+            for(let i = 0; i<participantes[0].length; i++){
+                //hacer equipo
+                let equipo = document.createElement("div");
+                equipo.setAttribute("class", "equipo");
+                cont.appendChild(equipo)
+                
+                let pj, imagen, nombre, txtNombre;
+                
+                i--;
+                for(let j=0; j<3; j++){
+                    if(i<(participantes[0].length-1)){
+                        i++;
+                        pj = document.createElement("div")
+                        pj.setAttribute("class", "persona")
+                        equipo.appendChild(pj)
+                        imagen = document.createElement("img")
+                        imagen.setAttribute("src", participantes[1][i])
+                        imagen.setAttribute("class", "miniavatar")
+                        pj.appendChild(imagen);
+                        nombre = document.createElement("p")
+                        nombre.setAttribute("class","mininame")
+                        pj.appendChild(nombre);
+                        txtNombre = document.createTextNode(participantes[0][i])
+                        nombre.appendChild(txtNombre);
+                    }else{
+                        console.log("Error, miembro del equipo inexistente")
+                    }
+                }
+            }
+        }
+
+        function fnActualizarLista(nmbr, imgn){
+            let introducido = false;
+            for(let i = 0; i<$(".equipo").length; i++){
+                if($(".equipo")[i].children.length > 2 ){
+                    console.log("equipo lleno")
+                }else{
+                    console.log("aun queda espacio")
+                    pj = document.createElement("div")
+                    pj.setAttribute("class", "persona")
+                    $(".equipo")[i].appendChild(pj)
+                    imagen = document.createElement("img")
+                    imagen.setAttribute("src", imgn)
+                    imagen.setAttribute("class", "miniavatar")
+                    pj.appendChild(imagen);
+                    nombre = document.createElement("p")
+                    nombre.setAttribute("class","mininame")
+                    pj.appendChild(nombre);
+                    txtNombre = document.createTextNode(nmbr)
+                    nombre.appendChild(txtNombre);
+                    introducido = true;
+                    break;
+                }
+            }
+            if(!introducido){
+                console.log("nuevo equipo")
+                equipo = document.createElement("div")
+                equipo.setAttribute("class", "equipo")
+                $(".equipo")[0].parentElement.appendChild(equipo)
+                pj = document.createElement("div")
+                pj.setAttribute("class", "persona")
+                equipo.appendChild(pj)
+                imagen = document.createElement("img")
+                imagen.setAttribute("src", imgn)
+                imagen.setAttribute("class", "miniavatar")
+                pj.appendChild(imagen);
+                nombre = document.createElement("p")
+                nombre.setAttribute("class","mininame")
+                pj.appendChild(nombre);
+                txtNombre = document.createTextNode(nmbr)
+                nombre.appendChild(txtNombre);
+                introducido = true;
+            }
+            $("img.miniavatar").on("click", fnExpulsarJugador)
+        }
+
+        function fnExpulsarJugador(event){
+            let hijos = this.parentNode.parentNode.children.length
+            if(hijos == 1){
+                this.parentNode.parentNode.remove();
+            }
+            this.parentNode.remove()
+        }
     </script>
 </html>

@@ -144,8 +144,7 @@
                 align-content: center;
                 padding: 2.5px;
                 margin: 2.5px;
-                /* width: 30%;
-                height: 100%; */
+                position: relative;
                 background-color: #0008;
             }
             .persona>img{
@@ -161,6 +160,13 @@
             /* https://codepen.io/chriscoyier/pen/VvRoWy */
             .showpeople::-webkit-scrollbar {
                 width: 0px;
+            }
+            img.btnCerrar {
+                position: absolute;
+                height: 1.5em;
+                width: 1.5em;
+                top: 3%;
+                right: 3%;
             }
         </style>
         <script>
@@ -345,8 +351,9 @@
         let participantes = [["Agente 1", "Agente A", "AGENTE", "etnegA", "aGENTE CAPS", "Agenten't"],["https://picsum.photos/200/300", "https://picsum.photos/200/300", "https://picsum.photos/200/300", "https://picsum.photos/300/200", "https://picsum.photos/200/300", "https://picsum.photos/200/300"]]
         fnCrearLista()
         
-        $("img.miniavatar").on("click", fnExpulsarJugador)
-
+        $("img.btnCerrar").on("click", fnExpulsarJugador)
+        
+        $("div.ok").on("click", fnStartGame)
 
         function fnCrearLista(){
             const cont = $(".showpeople")[0]
@@ -370,6 +377,10 @@
                         imagen.setAttribute("src", participantes[1][i])
                         imagen.setAttribute("class", "miniavatar")
                         pj.appendChild(imagen);
+                        imagen2 = document.createElement("img")
+                        imagen2.setAttribute("src", "img/times-solid.svg")
+                        imagen2.setAttribute("class", "btnCerrar")
+                        pj.appendChild(imagen2);
                         nombre = document.createElement("p")
                         nombre.setAttribute("class","mininame")
                         pj.appendChild(nombre);
@@ -396,6 +407,10 @@
                     imagen.setAttribute("src", imgn)
                     imagen.setAttribute("class", "miniavatar")
                     pj.appendChild(imagen);
+                    imagen2 = document.createElement("img")
+                    imagen2.setAttribute("src", "img/times-solid.svg")
+                    imagen2.setAttribute("class", "btnCerrar")
+                    pj.appendChild(imagen2);
                     nombre = document.createElement("p")
                     nombre.setAttribute("class","mininame")
                     pj.appendChild(nombre);
@@ -417,6 +432,10 @@
                 imagen.setAttribute("src", imgn)
                 imagen.setAttribute("class", "miniavatar")
                 pj.appendChild(imagen);
+                imagen2 = document.createElement("img")
+                imagen2.setAttribute("src", "img/times-solid.svg")
+                imagen2.setAttribute("class", "btnCerrar")
+                pj.appendChild(imagen2);
                 nombre = document.createElement("p")
                 nombre.setAttribute("class","mininame")
                 pj.appendChild(nombre);
@@ -424,7 +443,7 @@
                 nombre.appendChild(txtNombre);
                 introducido = true;
             }
-            $("img.miniavatar").on("click", fnExpulsarJugador)
+            $("img.btnCerrar").on("click", fnExpulsarJugador)
         }
 
         function fnExpulsarJugador(event){
@@ -434,5 +453,96 @@
             }
             this.parentNode.remove()
         }
+    
+        let arrayDeJuego =  new Array;
+        
+        function fnStartGame(){
+            //Llenado de datos a la tabla
+            for(let i = 0; i<$(".equipo").length; i++){
+                for(let j=0; j<$(".equipo")[i].children.length; j++){
+                    //
+                    let persona = $(".equipo")[i].children[j]
+                    //console.log(persona);
+                    arrayDeJuego[arrayDeJuego.length] = new Persona(persona.lastChild.innerHTML, persona.firstChild.src, i)
+                }
+            }
+            fnCompletarPersonas()
+            console.log(arrayDeJuego)
+        }
+    
+        class Persona{
+            //
+            constructor(nombre, imagen, nEquipo){
+                this.nombre = nombre;
+                this.imagen = imagen
+                this.equipo = nEquipo;
+                this.salud = 10;
+                this.energia = 10;
+                this.arrAliados = new Array;
+                this.manos = new Array;
+            }
+        }
+        class Arma{
+            constructor(nombre, daño, nManos, hiriente){
+                this.nombre = nombre;
+                this.daño = daño;
+                this.nManos = nManos;
+                this.hiriente = hiriente;
+            }
+        }
+        class Sitio{
+            constructor(nombre, contenido, evento){
+                this.nombre = nombre;
+                this.contenido = contenido;
+                this.evento = evento;
+            }
+        }
+
+
+        function fnCompletarPersonas(){
+            for(let i = 0; i < arrayDeJuego.length; i++){
+                //
+                for(let j = i+1; j < arrayDeJuego.length; j++){
+                    if(arrayDeJuego[i].equipo == arrayDeJuego[j].equipo){
+                        //console.log(arrayDeJuego[i].nombre + " y " + arrayDeJuego[j].nombre + " son amiguis");
+                        arrayDeJuego[i].arrAliados[arrayDeJuego[i].arrAliados.length] = arrayDeJuego[j].nombre;
+                        arrayDeJuego[j].arrAliados[arrayDeJuego[j].arrAliados.length] = arrayDeJuego[i].nombre;
+                    }
+                }
+            }
+        }
+
+
+        const recursos = ["comida", "un cura-heridas", "papel y boli"]
+        // const armas = ["una espada", "una pistola", "lo de los pixeles"]
+        const armas = [new Arma("Padota", 6, 2, false), new Arma("La pipa de la paz", 3, 1, true), new Arma("Lo de los pixeles del patojuego", 20, 2, false)]
+        const sitios = ["una tienda de todo a 100 abandonada", "una casa-arbol", "un templo de dioses olvidados"]
+
+        function eventoEncontrarAlgo(Persona){
+            //
+            switch(Math.floor(Math.random()*3)){
+                case 0:
+                    console.log(Persona.nombre + " ha encontrado recursos");
+                    console.log("ha encontrado " + recursos[Math.floor(Math.random()*recursos.length)]);
+                    break;
+                case 1:
+                    console.log(Persona.nombre + " ha encontrado un arma");
+                    console.log("ha encontrado " + armas[Math.floor(Math.random()*armas.length)].nombre);
+                    //Persona se guarda el arma en el inventario, la deja o en su defecto la intercambia segun la cantidad de manos que tenga ocupadas
+                    break;
+                case 2:
+                    console.log(Persona.nombre + " ha encontrado un sitio");
+                    console.log("ha encontrado " + sitios[Math.floor(Math.random()*sitios.length)]);
+                break;
+                default:
+                    console.log("Adios");
+            }
+        }
+
+
+
+        /*
+        https://codepen.io/airnan/full/PWmRMe
+        */
     </script>
 </html>

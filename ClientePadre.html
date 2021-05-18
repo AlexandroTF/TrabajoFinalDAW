@@ -460,7 +460,6 @@
             //Llenado de datos a la tabla
             for(let i = 0; i<$(".equipo").length; i++){
                 for(let j=0; j<$(".equipo")[i].children.length; j++){
-                    //
                     let persona = $(".equipo")[i].children[j]
                     //console.log(persona);
                     arrayDeJuego[arrayDeJuego.length] = new Persona(persona.lastChild.innerHTML, persona.firstChild.src, i)
@@ -468,6 +467,7 @@
             }
             fnCompletarPersonas()
             console.log(arrayDeJuego)
+            // Aqui empezaría el juego o algo así
         }
     
         class Persona{
@@ -478,7 +478,9 @@
                 this.equipo = nEquipo;
                 this.salud = 10;
                 this.energia = 10;
+                this.nManosLibres = 2;
                 this.arrAliados = new Array;
+                // ? this.arrEnemigos = new Array; ?
                 this.manos = new Array;
             }
         }
@@ -488,6 +490,7 @@
                 this.daño = daño;
                 this.nManos = nManos;
                 this.hiriente = hiriente;
+                /** Municion o numero de ataques por cada vez */
             }
         }
         class Sitio{
@@ -499,6 +502,7 @@
         }
 
 
+        //llena a las personas con sus amistades(añade a sus compas de equipo a amigos)
         function fnCompletarPersonas(){
             for(let i = 0; i < arrayDeJuego.length; i++){
                 //
@@ -518,24 +522,110 @@
         const armas = [new Arma("Padota", 6, 2, false), new Arma("La pipa de la paz", 3, 1, true), new Arma("Lo de los pixeles del patojuego", 20, 2, false)]
         const sitios = ["una tienda de todo a 100 abandonada", "una casa-arbol", "un templo de dioses olvidados"]
 
+        
+        // function eventoEncontrarAlgo(Persona){
+        //     //
+        //     let nEncontrado = 0;
+        //     switch(Math.floor(Math.random()*3)){
+        //         case 0:
+        //                 console.log(Persona.nombre + " ha encontrado recursos");
+        //                 nEncontrado = Math.floor(Math.random()*recursos.length);
+        //                 console.log("ha encontrado " + recursos[nEncontrado]);
+        //             break;
+        //         case 1:
+        //             console.log(Persona.nombre + " ha encontrado un arma");
+        //             nEncontrado = Math.floor(Math.random()*armas.length)
+        //             console.log("ha encontrado " + armas[nEncontrado].nombre);
+        //             //Persona se guarda el arma en el inventario, la deja o en su defecto la intercambia segun la cantidad de manos que tenga ocupadas
+        //             break;
+        //         case 2:
+        //             console.log(Persona.nombre + " ha encontrado un sitio");
+        //             nEncontrado = Math.floor(Math.random()*sitios.length)
+        //             console.log("ha encontrado " + sitios[nEncontrado]);
+        //             /** Comprobar la compañia de la gente, uno encuentra  y todos encuentran*/
+        //         break;
+        //         default:
+        //             console.log("Adios");
+        //     }
+        // }
+
         function eventoEncontrarAlgo(Persona){
             //
+            let nEncontrado = 0;
             switch(Math.floor(Math.random()*3)){
                 case 0:
-                    console.log(Persona.nombre + " ha encontrado recursos");
-                    console.log("ha encontrado " + recursos[Math.floor(Math.random()*recursos.length)]);
+                        console.log(Persona.nombre + " ha encontrado recursos");
+                        nEncontrado = Math.floor(Math.random()*recursos.length)
+                        console.log("ha encontrado " + recursos[nEncontrado]);
                     break;
                 case 1:
                     console.log(Persona.nombre + " ha encontrado un arma");
-                    console.log("ha encontrado " + armas[Math.floor(Math.random()*armas.length)].nombre);
+                    nEncontrado = Math.floor(Math.random()*armas.length)
+                    let armaEncontrada = armas[nEncontrado];
+                    console.log("ha encontrado " + armaEncontrada.nombre);
                     //Persona se guarda el arma en el inventario, la deja o en su defecto la intercambia segun la cantidad de manos que tenga ocupadas
+                    
+                    // Contar las manos ocupadas y libres
+                    let manosLibres = Persona.nManosLibres;
+                    // let manosOcupadas = 0;
+                    // for(const i in Persona.manos){
+                    //     manosOcupadas = manosOcupadas + Persona.manos[i].nManos;
+                    // }
+                    // Si tiene manos libres suficientes la coge
+                    if(manosLibres >= armaEncontrada.nManos){
+                        // Recoger el arma
+                        Persona.manos.push(armaEncontrada);
+                    }else if(armaEncontrada.daño > Persona.manos[Persona.manos.length-1]){
+                        // Cambia el arma con menos daño por la nueva
+                        /** Hay que controlar si el arma con menos daño es sin manos para no quitarla porque no hace falta */
+                        let armavieja;
+                        do{
+                            armavieja = Persona.manos.pop();
+                            manosLibres = manosLibres + armavieja.nManos;
+                        }while(manosLibres < armaEncontrada.manos)
+                        Persona.manos.push(armaEncontrada);
+                    }else{
+                        // Do nothing
+                        // Esconde un poco el arma para que nadie más la encuentre
+                    }
                     break;
                 case 2:
                     console.log(Persona.nombre + " ha encontrado un sitio");
-                    console.log("ha encontrado " + sitios[Math.floor(Math.random()*sitios.length)]);
+                    nEncontrado = Math.floor(Math.random()*sitios.length)
+                    console.log("ha encontrado " + sitios[nEncontrado]);
+                    sitios[nEncontrado].evento(Persona);
                 break;
                 default:
-                    console.log("Adios");
+                    console.log("Error: se ha encontrado un error, situacion irrealizable, ESCAPA");
+                    console.log("DONT DEAD");
+                    console.log("OPEN INSIDE");
+            }
+        }
+        
+        function eventoEncontrarAlguien(Persona, p2, hostilidad = 50){
+            let nRand = Math.floor(Math.random*101);
+            /** CONTROLAR LA PREFERENCIA DE HOSTILIDAD SELECCIONADA*/
+            /** CONTROLAR LA RELACIONES DE ALIANZAS PREVIAS O ENEMISTADES*/
+            if(Persona.arrAliados.includes(Persona.nombre)){nRand += (hostilidad*0.25)}
+            // if(Persona.arrEnemigos.includes(Persona.nombre)){nRand -= (hostilidad*0.25)}
+
+            if(nRand > hostilidad){
+                // Encuentro no hostil
+                /** En principio solo puede ser una ALIANZA, los trueques no estarán habilitados(de momento) */
+
+                // ALIANZA
+                fnAlianza(Persona, p2);
+            }else{
+                // Encuentro hostil
+                nRand = Math.floor(Math.random()*100);
+                /** Si queremos que se pueda seleccionar la agresividad de la peña, aqui */
+                if(nRand > 50){
+                    // FLIGHT // HUIDA
+                    console.log(Persona.nombre + " se encuentra con " + p2.nombre + " pero decide huir");
+                }else{
+                    // FIGHT // PELEA
+                    fnCombate(Persona, p2);
+                }
             }
         }
 

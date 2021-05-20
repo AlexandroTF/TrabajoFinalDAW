@@ -180,6 +180,40 @@
             alert(ojo);*/
         </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            function fnActualizarChat(){
+                console.log("imagen subida");
+                // $.ajax({
+                //     url: "chatlog.txt",
+                //     cache: false,
+                //     success: function(html){		
+                //         $(".chat")[0].html(html); //Insert chat log into the #chatbox div
+                //         console.log(html); //Insert chat log into the console.log
+                //     },
+                // });
+            }
+            function fnWebHook(mensaje){
+                $.ajax({
+                    url: 'https://discord.com/api/webhooks/845022656109477908/hvtiQkt32ffBilcCdRH7Zbi5T_BEw_kGK0rro0sKS4dw-1LEHC5o6bPt0caYI0JuGnzd',
+                    data: JSON.stringify({
+                        content: mensaje,
+                        avatar_url:	'https://picsum.photos/200/200',
+                        tts:	false,
+                        file:	null,
+                        embeds:	[],
+                        payload_json:	null,
+                        allowed_mentions: null,
+                    }),
+                    method: 'POST',
+                    headers: {"content-type": "application/json"}
+                }).done((data) => {
+                    console.log(data);
+                    console.log('mensaje enviado 10/10');
+                }).fail(() => {
+                    console.log('error')
+                })
+            }
+        </script>
     </head>
     <body>
         <div class="host cont">
@@ -337,7 +371,33 @@
         </div>
     </body>
     <script>
+        function fnActualizarChat(){
+            console.log("imagen subida");
+            // $.ajax({
+            //     url: "chatlog.txt",
+            //     cache: false,
+            //     success: function(html){		
+            //         $(".chat")[0].html(html); //Insert chat log into the #chatbox div
+            //         console.log(html); //Insert chat log into the console.log
+            //     },
+            // });
+        }
+        function fnWebHook(){
+        $.ajax({
+                url: 'https://discord.com/api/webhooks/845022656109477908/hvtiQkt32ffBilcCdRH7Zbi5T_BEw_kGK0rro0sKS4dw-1LEHC5o6bPt0caYI0JuGnzd',
+                data: JSON.stringify({
+                    content: 'hola'
+                }),
+                content: "hola"
+            }).done((data) => {
+                console.log(data);
+                console.log('mensaje enviado 10/10');
+            }).fail(() => {
+                console.log('error')
+            })
+    }
         //actualizar y añadir gente
+        fnWebHook();
         $(".addbot").on("click", ()=>{
             let nombre = prompt("Nombre");
             let imagen = prompt("ruta imagen");
@@ -641,7 +701,6 @@
             }
         }
 
-        
         function fnCombate(p1, p2){
             // CALCULAR LOS BANDOS
             let bando1, bando2;

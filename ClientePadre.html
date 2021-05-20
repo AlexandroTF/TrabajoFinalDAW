@@ -471,7 +471,6 @@
         }
     
         class Persona{
-            //
             constructor(nombre, imagen, nEquipo){
                 this.nombre = nombre;
                 this.imagen = imagen
@@ -501,7 +500,6 @@
                 this.evento = evento;
             }
         }
-
 
         //llena a las personas con sus amistades(añade a sus compas de equipo a amigos)
         function fnCompletarPersonas(){
@@ -643,9 +641,59 @@
             }
         }
 
+        
+        function fnCombate(p1, p2){
+            // CALCULAR LOS BANDOS
+            let bando1, bando2;
+            bando1 = new Array;
+            bando1.push(p1);
+            p1.arrCompa.forEach(nombreCompa => {
+                arrayDeJuego.forEach(p => {
+                    if(nombreCompa == p.nombre){
+                        bando1.push(p);
+                    }
+                })
+            });
+            p2.arrCompa.forEach(nombreCompa => {
+                arrayDeJuego.forEach(p => {
+                    if(nombreCompa == p.nombre){
+                        bando2.push(p);
+                    }
+                })
+            });
+            // CALCULO DE DAÑO POR EQUIPO
+            bando1.forEach(p => {
+                let dañoPorPersona = 0
+                p.manos.forEach(arma => {
+                    dañoPorPersona += arma.daño;
+                })
+                if(dañoPorPersona == 0){ dañoPorPersona = 1}
+                dañoPorMano1 += dañoPorPersona;
+            })
+            bando1.forEach(p => {
+                let dañoPorPersona = 0
+                p.manos.forEach(arma => {
+                    dañoPorPersona += arma.daño;
+                })
+                if(dañoPorPersona == 0){ dañoPorPersona = 1}
+                dañoPorMano1 += dañoPorPersona;
+            })
 
-        /*
-        https://codepen.io/airnan/full/PWmRMe
-        */
+
+
+            
+
+        }
+        
+
+        //
+            // https://codepen.io/airnan/full/PWmRMe
+            // https://medium.com/davao-js/tutorial-creating-a-simple-discord-bot-9465a2764dc0
+            // https://youtu.be/EUB777JJT5E
+            
+            // // DISCORD WEBHOOKS
+            // https://youtu.be/-4Lid7tBr6Y
+            // https://discord.com/developers/docs/resources/webhook#get-webhook
+        //
     </script>
 </html>

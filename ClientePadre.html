@@ -574,6 +574,30 @@
                 }
             }
         }
+        
+        
+        /** GENERATION OF THE CODE
+         * RETURNS DE CODE(String, 6 letters)
+        */
+        function generacionDelCodigo(){
+
+            const letras = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'K', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+            let code = '';
+            for(let i = 0; i<6; i++){
+                code = code + letras[Math.floor(Math.random()*letras.length)]
+            }
+            return code;
+        }
+        //the way we control that people appears only once per day
+        //Para cada día:
+        let personasPorInteractuar = new Array;
+        arrayDeJuego.forEach(p => {
+            if(p.salud > 0){
+                personasPorInteractuar.push(p)
+            }
+        });
+        personasPorInteractuar = personasPorInteractuar.sort((a, b) => 0.5 - Math.random());
+
 
 
         const recursos = ["comida", "un cura-heridas", "papel y boli"]

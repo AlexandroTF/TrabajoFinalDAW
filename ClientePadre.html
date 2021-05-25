@@ -588,6 +588,41 @@
             }
             return code;
         }
+        function grabarCodigo(codigo){
+            $.ajax({
+                url: '',/*Aquí iría el archivo PHP*/
+                method: 'POST',
+                headers: {"content-type": "application/json"},
+                data: JSON.stringify({
+                    code: codigo,
+                })
+            }).done((data) => {
+                    //controlar no solo que la coneccion haya ido bien sino tambien que nos devuelva la respuesta correcta o un mensaje de "error, fallo en la coneccion con la BDD"
+                    console.log(data);
+                    console.log('Codigo enviado correctamente');
+            }).fail(() => {
+                console.log('Error, el codigo no ha podido ser enviado')
+            })
+        }
+        function comprobarNuevosJugadores(){
+            $.ajax({
+                url: '',/*Aquí iría el archivo PHP*/
+                method: 'POST',
+                headers: {"content-type": "application/json"},
+                data: JSON.stringify({
+                    code: codigo,
+                })
+            }).done((data) => {
+                let datos = JSON.parse(data);
+                    if(datos.nuevos != null){
+                        
+                    }
+                    console.log(data);
+                    console.log('Codigo enviado correctamente');
+            }).fail(() => {
+                console.log('Error, el codigo no ha podido ser enviado')
+            })
+        }
         //the way we control that people appears only once per day
         //Para cada día:
         let personasPorInteractuar = new Array;

@@ -181,6 +181,9 @@
         </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script>
+            // VARIABLES 
+            let urlWebHook = '';
+            // ALERTA, CAMBIAR TODO PARA QUE A LA GENTE LA IDENTIFIQUE TAMBIEN UN NUMERO
             function fnActualizarChat(){
                 console.log("imagen subida");
                 // $.ajax({
@@ -604,10 +607,10 @@
                 console.log('Error, el codigo no ha podido ser enviado')
             })
         }
-        function comprobarNuevosJugadores(){
+        function comprobarNuevosJugadores(codigo){
             $.ajax({
                 url: '',/*Aquí iría el archivo PHP*/
-                method: 'POST',
+                method: 'GET',
                 headers: {"content-type": "application/json"},
                 data: JSON.stringify({
                     code: codigo,
@@ -615,7 +618,7 @@
             }).done((data) => {
                 let datos = JSON.parse(data);
                     if(datos.nuevos != null){
-                        
+                        // fnActualizarLista(nombre, imagen)
                     }
                     console.log(data);
                     console.log('Codigo enviado correctamente');
@@ -623,6 +626,43 @@
                 console.log('Error, el codigo no ha podido ser enviado')
             })
         }
+        function obtenerWebHook(){
+            // 
+            $.ajax({
+                url: '',/*Aquí iría el archivo PHP*/
+                method: 'GET',
+                headers: {"content-type": "application/json"},
+                data: JSON.stringify({
+                    code: codigo,
+                })
+            }).done((data) => {
+                let datos = JSON.parse(data);
+                urlWebHook = data.url;
+                console.log('Url del webhook recuperado correctamente');
+            }).fail(() => {
+                console.log('Error, no se ha podido acceder ni recuperar el webhook')
+            })
+        }
+        function fnWebHook(mensaje, url, avatarPic = 'https://picsum.photos/200/200'){
+                $.ajax({
+                    url: url,
+                    data: JSON.stringify({
+                        content: mensaje,
+                        avatar_url:	avatarPic,
+                        tts:	false,
+                        file:	null,   
+                        embeds:	[],
+                        payload_json:	null,
+                        allowed_mentions: null,
+                    }),
+                    method: 'POST',
+                    headers: {"content-type": "application/json"}
+                }).done((data) => {
+                    console.log('mensaje enviado');
+                }).fail(() => {
+                    console.log('error')
+                })
+            }
         //the way we control that people appears only once per day
         //Para cada día:
         let personasPorInteractuar = new Array;

@@ -58,31 +58,37 @@ class Respuesta{
 }
 // FUNCIONES
 function fnResponderPJs($codigo){
+    // Accede a la BDD y responde con un array de todas las personas que jueguen en esa sala
     $resp = new Respuesta();
     // 
     return $resp;
 }
 function fnResponderWHs($codigo){
+    // Accede a la BDD y responde con un array de todos los webhooks de esa sala (idealmente no habría mas que una)
     $resp = new Respuesta();
     // 
     return $resp;
 }
 function fnCrearSala($codigo){
+    // Accede a la BDD y crea una tupla en la tabla de PJs con datos de ejemplo // ID   || Nombre:Sala   ||  Foto:null    ||  Code:$codigo    \\
     $resp = new Respuesta();
     // 
     return $resp;
 }
 function fnCrearPJ($codigo, $nombre, $foto){
+    // Accede a la BDD y crea una tupla en la tabla de PJs con los datos pasados // ID   || Nombre:$nombre   ||  Foto:$foto    ||  Code:$codigo    \\
     $resp = new Respuesta();
     // 
     return $resp;
 }
 function fnCrearWH($codigo, $urlWH){
+    // Accede a la BDD y crea una tupla en la tabla de WHs con los datos pasados    //  ID  ||  url:$urlWH  ||  Code:$codigo    \\
     $resp = new Respuesta();
     // 
     return $resp;
 }
 function fnTerminarJuego($codigo){
+    // Accede a la BDD y elimina todas las tuplas cuyo code sea $codigo
     $resp = new Respuesta();
     // IDEA: Cuando bot.js lea que el webhook dice "Fin del juego, gana: " o algo así, el bot elimina dicho webhook porque ese mensaje solo se enviará junto con esta funcion al terminar el juego
         // ALSO:comprobar que pasa con los mensajes de un webhook despues de eliminar ese webhook

@@ -134,5 +134,52 @@
             document.getElementById("imagen").src = link;
         }
         //Y cuando le de a enviar que haga una peticion ajax, envia la imagen, el nombre y el codigo de sala
+        let r = new FileReader();
+        $('.ok').on('click', ()=>{
+            r.readAsDataURL($('input')[1].files[0]);
+            r.onloadend = ()=>{
+                let code = prompt('codigo de la sala');
+                let nombre = $('#nom')[0];
+                let imagen = r.result;
+                console.log('OKAY')
+                if(code){console.log('Codigo: OKAY')}
+                if(nombre){console.log('Nombre: OKAY')}
+                if(imagen){console.log('Imagen: OKAY')}   
+                // if(imagen){console.log(imagen.length)}
+                // Peticion ajax para grabar el PJ
+                $.ajax({
+                    url: 'ajaxBDD.php',
+                    data:{
+                        code: code,
+                        peticion: 'registradas',
+                    },
+                    method: 'GET',
+                    // headers: {"content-type": "application/json"}
+                }).done((data) => {
+                    console.log(JSON.parse(data));
+                    console.log(JSON.parse(data).length);
+                    if((JSON.parse(data).length) > 0){
+                        $.ajax({
+                            url: 'ajaxBDD.php',
+                            data:{
+                                code: code,
+                                peticion: 'crearPJ',
+                                pic: imagen,
+                                nombre: nombre
+                            },
+                            method: 'POST'
+                        }).done((data)=>{
+                            console.log(JSON.parse(data));
+                        }).fail(()=>{
+                            // 
+                        })
+                    }
+                    //
+                    // console.log('mensaje enviado 10/10');
+                }).fail(() => {
+                    console.log('error')
+                })
+            }
+        })
     </script>
 </html>

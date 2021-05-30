@@ -1,0 +1,165 @@
+body{
+    background-color: #002233;
+}
+.host, .guest{
+    position: absolute;
+    height: 20vh;
+    width: 60vw;
+    top: 40vh;
+    color: white;
+    display: flex;
+    border-radius: 5px;
+
+}
+h1, form{
+    margin: auto;
+    /*display: block;*/
+    font-size: 4vh;
+    color: white;
+}
+.host{
+    background-color: darkgoldenrod;
+    right: 20vw;
+}
+.guest{
+    background-color: crimson;
+    left: 20vw;
+}
+div>h1>a::after{
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+.cont{
+    top: 15vh;
+    padding:1em;
+    height: 70vh;
+}
+#nom{
+    border-radius: 5px;
+    height: 10vh;
+    width: 55vw;
+    font-size: 1.5em;
+    text-align: center;
+    background: #8888;
+}
+.upload{
+    position: relative;
+    /*border-radius: 100em;*/
+    height: 20vw;
+    width: 20vw;
+    /*background-color: thistle;*/  
+    display: block;
+    margin: 0.5em auto;
+}
+.upload>label>img{
+    border-radius: 100em;
+    height: 20vw;
+    width: 20vw;
+}
+#avatar, #btnsubir{
+    height: 5vw;
+    width: 5vw;
+    background-color: turquoise;
+    border-radius: 100em;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+}
+#avatar{
+    opacity: 0%;
+}
+input#nom{
+    color: whitesmoke;
+    font-family: 'Lora', serif;
+}
+.ok{
+    position: absolute;
+    bottom: 2em;
+    right: 2em;
+    padding: 0 2em;
+    background-color: #ffe4c4;
+    border-radius: 10px;
+    color: black;
+}
+.ok:active{
+    background-color: #c4b097;
+    bottom: 1.8em;
+}
+.addbot{
+    position: absolute;
+    bottom: 2em;
+    left: 2em;
+    padding: 0 2em;
+    background-color: #c2208c;
+    border-radius: 10px;
+    color: black;
+}
+.addbot:active{
+    background-color: #991a6f;
+    bottom: 1.8em;
+}
+.code{
+    /*Aqui debería ser un position absolute para controlar bien el centrado*/
+    position: relative;
+    bottom: 7em;
+}
+.showpeople{
+    border: solid black 1px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    width: 80%;
+    height: 50%;
+    margin: auto;
+    flex-wrap: wrap;
+    font-size: 1.2em;
+    overflow: scroll;
+    justify-content: space-around;
+    /* transform: scale(0.7); */
+}
+.equipo{
+    /*border: black 1px solid;*/
+    /* padding: 1%; */
+    background-color: #0008;
+    margin: 1%;
+    /* height: 12%;
+    width: 30%; */
+    /* transform: scale(0.7); */
+}
+.persona{
+    /*border: solid white 1px;*/
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    padding: 2.5px;
+    margin: 2.5px;
+    position: relative;
+    background-color: #0008;
+}
+.persona>img{
+    height: 5em;
+    width: 5em;
+    border-radius: 100%;
+    /* margin: auto; */
+    display: block;
+}
+p.mininame{
+    margin: auto;
+}
+/* https://codepen.io/chriscoyier/pen/VvRoWy */
+.showpeople::-webkit-scrollbar {
+    width: 0px;
+}
+img.btnCerrar {
+    position: absolute;
+    height: 1.5em;
+    width: 1.5em;
+    top: 3%;
+    right: 3%;
+}

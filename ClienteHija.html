@@ -139,8 +139,9 @@
             r.readAsDataURL($('input')[1].files[0]);
             r.onloadend = ()=>{
                 let code = prompt('codigo de la sala');
-                let nombre = $('#nom')[0];
+                let nombre = $('#nom')[0].value;
                 let imagen = r.result;
+                imagen = 'imagenIdeal';
                 console.log('OKAY')
                 if(code){console.log('Codigo: OKAY')}
                 if(nombre){console.log('Nombre: OKAY')}
@@ -156,22 +157,25 @@
                     method: 'GET',
                     // headers: {"content-type": "application/json"}
                 }).done((data) => {
-                    console.log(JSON.parse(data));
-                    console.log(JSON.parse(data).length);
-                    if((JSON.parse(data).length) > 0){
-                        $.ajax({
-                            url: 'ajaxBDD.php',
-                            data:{
+                    // console.log(JSON.parse(data));
+                    // console.log(JSON.parse(data).length);
+                    let dat2 = {
                                 code: code,
                                 peticion: 'crearPJ',
                                 pic: imagen,
                                 nombre: nombre
-                            },
-                            method: 'POST'
+                            }
+                    console.log(dat2);
+                    if((JSON.parse(data).length) > 0){
+                        $.ajax({
+                            url: 'ajaxBDD.php',
+                            data: dat2,
+                            method: 'post'
                         }).done((data)=>{
-                            console.log(JSON.parse(data));
+                            console.log(data);
+                            // console.log(JSON.parse(data));
                         }).fail(()=>{
-                            // 
+                            console.log('Error en la segunda peticion ajax')
                         })
                     }
                     //

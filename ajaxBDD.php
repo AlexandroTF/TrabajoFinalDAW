@@ -1,5 +1,6 @@
 <?php
-if(isset($_GET)){
+echo $_SERVER["REQUEST_METHOD"];
+if($_SERVER["REQUEST_METHOD"] == 'GET'){
     // COMPROBAMOS LOS DATOS QUE NOS HAN PASADO
     if(isset($_GET['code'])){ $code = $_GET['code'];}
     if(isset($_GET['peticion'])){
@@ -16,10 +17,10 @@ if(isset($_GET)){
         }
     }else{
         //ERROR, CODIGO INDICADO ERRONEAMENTE
-        echo('ERROR, CODIGO INDICADO ERRONEAMENTE');
+        echo('ERROR, CODIGO INDICADO ERRONEAMENTE EN GET');
         // Aqui debería devolver un objeto estandar con el valor ok si ha sido exitosa la peticion y con mensajes de error si ha fracasado
     }
-}elseif(isset($_POST)){
+}elseif($_SERVER["REQUEST_METHOD"] == 'POST'){
     // COMPROBAMOS LOS DATOS QUE NOS HAN PASADO
     if(isset($_POST['code'])){ $code = $_POST['code'];}
     if(isset($_POST['peticion'])){ $peticion = $_POST['peticion'];}
@@ -27,16 +28,21 @@ if(isset($_GET)){
     if(isset($_POST['name'])){ $nombre = $_POST['name'];}
     if(isset($_POST['urlWH'])){ $urlWH = $_POST['urlWH'];}
     if($code !== null && $peticion !== null){
-        if(strcmp($peticion, 'crearSala')){
+        if(strcmp($peticion, 'crearSala') === 0){
+			echo 'creando sala';
             echo json_encode(fnCrearSala($code));
         }
-        if(strcmp($peticion, 'crearPJ')){
+        if(strcmp($peticion, 'crearPJ') === 0){
+			echo 'creando PJ';
+			echo $code;
+			echo $nombre;
+			echo $foto;
             echo json_encode(fnCrearPJ($code, $nombre, $foto));
         }
-        if(strcmp($peticion, 'crearWH')){
+        if(strcmp($peticion, 'crearWH') === 0){
             echo json_encode(fnCrearWH($code));
         }
-        if(strcmp($peticion, 'gameOver')){
+        if(strcmp($peticion, 'gameOver') === 0){
             echo json_encode(fnTerminarJuego($code));
             // fnBorrarPJs($code);
         }
@@ -44,7 +50,7 @@ if(isset($_GET)){
         // ID   || Nombre   ||  Foto    ||  Code    \\
     }else{
         // ERROR, ALGUNO DE LOS PARAMETROS HA SIDO INTRODUCIDO ERRONEAMENTE
-        echo('ERROR, ALGUNO DE LOS PARAMETROS HA SIDO INTRODUCIDO ERRONEAMENTE');
+        echo('ERROR, ALGUNO DE LOS PARAMETROS HA SIDO INTRODUCIDO ERRONEAMENTE EN POST');
         // Aqui debería devolver un objeto estandar con el valor ok si ha sido exitosa la peticion y con mensajes de error si ha fracasado
     }
 }
@@ -181,7 +187,7 @@ function fnResponderWHs($codigo){
 function fnCrearSala($codigo){
     // Accede a la BDD y crea una tupla en la tabla de PJs con datos de ejemplo // ID   || Nombre:Sala   ||  Foto:null    ||  Code:$codigo    \\
 	$obj = conectaBD::singleton();
-	if ($obj->insertaPJ($id, null, null, $codigo) !== false){
+	if ($obj->insertaPJ($id = 1, null, null, $codigo) !== false){
 		return('se inserto con exito <br>');
 	}
 	else {

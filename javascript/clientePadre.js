@@ -40,12 +40,20 @@ let arrayDeJuego =  new Array();
 
 document.addEventListener("readystatechange", cargarEventos, false);
 function cargarEventos(evento){
-	if(document.readyState == "interactive"){
+	if(document.readyState == "interactive"){ 
         // 
-        //actualizar y añadir gente
+        // GENERAR EL CODIGO
+        const code = generacionDelCodigo();
+        console.log(code);
+        $('.code').html(code);
+        // grabarCodigo(code);
+
+        // ACTUALIZAR Y AÑADIR GENTE
+        // ESCUCHADORES
         $("img.btnCerrar").on("click", fnExpulsarJugador);
         $("div.ok").on("click", fnStartGame);
         $(".addbot").on("click", ()=>{
+            // Hacer esto con un modal si es posible
             let nombre = prompt("Nombre");
             let imagen = prompt("ruta imagen");
             participantes[0][participantes[0].length] = nombre;
@@ -54,19 +62,26 @@ function cargarEventos(evento){
             //console.log(participantes)
             //fnActualizarLista();
         })
+
+        // PRUEBA
         //let participantes = [[],[]]
         let participantes = [["Agente 1", "Agente A", "AGENTE", "etnegA", "aGENTE CAPS", "Agenten't"],["https://picsum.photos/200/300", "https://picsum.photos/200/300", "https://picsum.photos/200/300", "https://picsum.photos/300/200", "https://picsum.photos/200/300", "https://picsum.photos/200/300"]]
         //fnCrearLista()
 
         //the way we control that people appears only once per day
         //Para cada día:
-        let personasPorInteractuar = new Array;
-        arrayDeJuego.forEach(p => {
-            if(p.salud > 0){
-                personasPorInteractuar.push(p)
-            }
-        });
-        personasPorInteractuar = personasPorInteractuar.sort((a, b) => 0.5 - Math.random());
+        function fnNuevoDia(){
+            let personasPorInteractuar = new Array;
+            arrayDeJuego.forEach(p => {
+                if(p.salud > 0){
+                    personasPorInteractuar.push(p)
+                }
+            });
+            personasPorInteractuar = personasPorInteractuar.sort((a, b) => 0.5 - Math.random());
+            let currentPJ = personasPorInteractuar.pop;
+            eventoEncontrarAlgo(currentPJ);
+        }
+
 
         //COSAS
         const recursos = ["comida", "un cura-heridas", "papel y boli"];
@@ -226,7 +241,8 @@ function cargarEventos(evento){
     */
     function generacionDelCodigo(){
 
-        const letras = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'K', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+        // const letras = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'K', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+        const letras = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'K', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
         let code = '';
         for(let i = 0; i<6; i++){
             code = code + letras[Math.floor(Math.random()*letras.length)]
@@ -259,6 +275,9 @@ function cargarEventos(evento){
             })
         }).done((data) => {
             let datos = JSON.parse(data);
+            // Supongamos que devuelve esto
+            let participantes = [["id1", "imagen", "AGENTE", "etnegA", "aGENTE CAPS", "Agenten't"],["https://picsum.photos/200/300", "https://picsum.photos/200/300", "https://picsum.photos/200/300", "https://picsum.photos/300/200", "https://picsum.photos/200/300", "https://picsum.photos/200/300"]]
+            // comprobamos los nombres, supongo;
                 if(datos.nuevos != null){
                     // fnActualizarLista(nombre, imagen)
                 }

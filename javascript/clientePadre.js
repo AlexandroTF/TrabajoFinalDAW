@@ -52,6 +52,7 @@ function cargarEventos(evento){
         // ESCUCHADORES
         $("img.btnCerrar").on("click", fnExpulsarJugador);
         $("div.ok").on("click", fnStartGame);
+        $("div.continue").on("click", fnNuevoDia);
         $(".addbot").on("click", ()=>{
             // Hacer esto con un modal si es posible
             let nombre = prompt("Nombre");
@@ -65,21 +66,81 @@ function cargarEventos(evento){
 
         // PRUEBA
         //let participantes = [[],[]]
-        let participantes = [["Agente 1", "Agente A", "AGENTE", "etnegA", "aGENTE CAPS", "Agenten't"],["https://picsum.photos/200/300", "https://picsum.photos/200/300", "https://picsum.photos/200/300", "https://picsum.photos/300/200", "https://picsum.photos/200/300", "https://picsum.photos/200/300"]]
+        // let participantes = [["Agente 1", "Agente A", "AGENTE", "etnegA", "aGENTE CAPS", "Agenten't"],["https://picsum.photos/200/300", "https://picsum.photos/200/300", "https://picsum.photos/200/300", "https://picsum.photos/300/200", "https://picsum.photos/200/300", "https://picsum.photos/200/300"]]
+        let participantes = [["Agente 1", "https://picsum.photos/200/300"],["AGENTE", "https://picsum.photos/200/300"],["etnegA", "https://picsum.photos/200/300"],["aGENTE CAPS", "https://picsum.photos/200/300"],["Agenten't"]];
         //fnCrearLista()
 
         //the way we control that people appears only once per day
         //Para cada día:
         function fnNuevoDia(){
+            console.log('Empieza un nuevo día');
+            $('.showpeople').html('');
             let personasPorInteractuar = new Array;
             arrayDeJuego.forEach(p => {
                 if(p.salud > 0){
-                    personasPorInteractuar.push(p)
+                    personasPorInteractuar.push(p);
                 }
             });
             personasPorInteractuar = personasPorInteractuar.sort((a, b) => 0.5 - Math.random());
-            let currentPJ = personasPorInteractuar.pop;
-            eventoEncontrarAlgo(currentPJ);
+            // console.log('Array de gente viva que juega');
+            // console.log(personasPorInteractuar);
+
+            while(personasPorInteractuar.length > 0){
+                let currentPJ = personasPorInteractuar.pop();
+                let secondPJ;
+                // console.log(currentPJ);
+                // randomizar eventos, o no
+                let nEvento = Math.floor(Math.random()*3);
+                if(personasPorInteractuar.length < 2){ nEvento = Math.floor(Math.random()*2) }
+                switch(nEvento){
+                    case 0:
+                        // console.log(currentPJ);
+                        console.log(currentPJ.nombre + " simplemente espera y sobrevive");
+                        showMsg(' simplemente espera y sobrevive', currentPJ);
+                        break;
+                    case 1:
+                        // console.log(currentPJ);
+                        console.log(currentPJ.nombre + " encuentra algo");
+                        showMsg(' encuentra algo', currentPJ);
+                        break;
+                    case 2:
+                        // console.log(currentPJ);
+                        secondPJ = personasPorInteractuar.pop();
+                        // currentPJ.salud -= 2;
+                        // secondPJ.salud -= 3;
+                        console.log(arrayDeJuego.indexOf(currentPJ));
+                        console.log(arrayDeJuego[arrayDeJuego.indexOf(currentPJ)]);
+                        console.log(currentPJ.nombre + " se ha encontrado con " + secondPJ.nombre);
+                        showMsg(' se ha encontrado con ', currentPJ, secondPJ);
+                        break;
+                    default:
+                        console.log('Error, ha sucedido un fallo inexplicable.')
+                }
+            }
+            // eventoEncontrarAlguien(currentPJ);
+            // eventoEncontrarAlgo(currentPJ);
+        }
+        function showMsg(text, p1, p2){
+            const campo = $('.showpeople');
+            let texto = (text, p1, p2) => {
+                if(p2){
+                    return `
+                    <div class="linea">
+                    <img src='${p1.imagen}'><p>${p1.nombre}
+                    ${text}</p>
+                    <img src='${p2.imagen}'><p>${p2.nombre}</p>
+                    </div>
+                    `;
+                }else{
+                    return `
+                    <div class="linea">
+                    <img src='${p1.imagen}'><p>${p1.nombre}
+                    ${text}</p>
+                    </div>
+                    `;
+                }
+            }
+            campo.append(texto(text, p1, p2));
         }
 
 
@@ -99,20 +160,6 @@ function cargarEventos(evento){
         //         console.log(html); //Insert chat log into the console.log
         //     },
         // });
-    }
-    function fnWebHook(){
-        $.ajax({
-            url: 'https://discord.com/api/webhooks/845022656109477908/hvtiQkt32ffBilcCdRH7Zbi5T_BEw_kGK0rro0sKS4dw-1LEHC5o6bPt0caYI0JuGnzd',
-            data: JSON.stringify({
-                content: 'hola'
-            }),
-            content: "hola"
-        }).done((data) => {
-            console.log(data);
-            console.log('mensaje enviado 10/10');
-        }).fail(() => {
-            console.log('error');
-        });
     }
     function fnCrearLista(){
         const cont = $(".showpeople")[0]
@@ -179,25 +226,25 @@ function cargarEventos(evento){
             }
         }
         if(!introducido){
-            console.log("nuevo equipo")
-            equipo = document.createElement("div")
-            equipo.setAttribute("class", "equipo")
-            $(".equipo")[0].parentElement.appendChild(equipo)
-            pj = document.createElement("div")
-            pj.setAttribute("class", "persona")
-            equipo.appendChild(pj)
-            imagen = document.createElement("img")
-            imagen.setAttribute("src", imgn)
-            imagen.setAttribute("class", "miniavatar")
+            console.log("nuevo equipo");
+            equipo = document.createElement("div");
+            equipo.setAttribute("class", "equipo");
+            $(".showpeople")[0].appendChild(equipo);
+            pj = document.createElement("div");
+            pj.setAttribute("class", "persona");
+            equipo.appendChild(pj);
+            imagen = document.createElement("img");
+            imagen.setAttribute("src", imgn);
+            imagen.setAttribute("class", "miniavatar");
             pj.appendChild(imagen);
-            imagen2 = document.createElement("img")
-            imagen2.setAttribute("src", "img/times-solid.svg")
-            imagen2.setAttribute("class", "btnCerrar")
+            imagen2 = document.createElement("img");
+            imagen2.setAttribute("src", "img/times-solid.svg");
+            imagen2.setAttribute("class", "btnCerrar");
             pj.appendChild(imagen2);
-            nombre = document.createElement("p")
-            nombre.setAttribute("class","mininame")
+            nombre = document.createElement("p");
+            nombre.setAttribute("class","mininame");
             pj.appendChild(nombre);
-            txtNombre = document.createTextNode(nmbr)
+            txtNombre = document.createTextNode(nmbr);
             nombre.appendChild(txtNombre);
             introducido = true;
         }
@@ -211,6 +258,8 @@ function cargarEventos(evento){
         this.parentNode.remove()
     }
     function fnStartGame(){
+        // Vaciar el array por si acaso
+        arrayDeJuego = [];
         //Llenado de datos a la tabla
         for(let i = 0; i<$(".equipo").length; i++){
             for(let j=0; j<$(".equipo")[i].children.length; j++){
@@ -218,6 +267,20 @@ function cargarEventos(evento){
                 //console.log(persona);
                 arrayDeJuego[arrayDeJuego.length] = new Persona(persona.lastChild.innerHTML, persona.firstChild.src, i)
             }
+        }
+        if(arrayDeJuego.length < 2){
+            console.log('Error, tienes que introducir mas de un participante');
+            alert('Error, tienes que introducir mas de un participante');
+        }else{
+            $('.equipo').fadeOut();
+            $('.addbot').fadeOut();
+            setTimeout( ()=>{
+                $('.showpeople').html('');
+                $('.addbot').remove();
+                $('.showpeople').html('<h1 style="font-size: 4em">Van a empezar el sorteo</h1>');
+                $('.ok')[0].style.display = 'none';
+                $('.continue')[0].style.display = 'block';
+            }, 400);
         }
         fnCompletarPersonas()
         console.log(arrayDeJuego)
@@ -375,7 +438,7 @@ function cargarEventos(evento){
                 if(manosLibres >= armaEncontrada.nManos){
                     // Recoger el arma
                     Persona.manos.push(armaEncontrada);
-                }else if(armaEncontrada.danno > Persona.manos[Persona.manos.length-1]){
+                }else if(armaEncontrada.danno > Persona.nManosLibres[Persona.nManosLibres.length-1]){
                     // Cambia el arma con menos daño por la nueva
                     /** Hay que controlar si el arma con menos daño es sin manos para no quitarla porque no hace falta */
                     let armavieja;
@@ -491,5 +554,6 @@ function cargarEventos(evento){
     // https://youtu.be/-4Lid7tBr6Y
     // https://discord.com/developers/docs/resources/webhook#get-webhook
     //
+    // https://www.digitalocean.com/community/tutorials/how-to-make-changes-to-the-dom#:~:text=Removing%20Nodes%20from%20the%20DOM&text=Child%20nodes%20can%20be%20removed,be%20removed%20with%20remove()%20.&text=Using%20the%20to%2Ddo%20example,after%20they've%20been%20completed.
     }
 }

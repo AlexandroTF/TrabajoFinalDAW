@@ -142,10 +142,10 @@
                 let nombre = $('#nom')[0].value;
                 let imagen = r.result;
                 // imagen = 'imagenIdeal';
-                console.log('OKAY')
-                if(code){console.log('Codigo: OKAY')}
-                if(nombre){console.log('Nombre: OKAY')}
-                if(imagen){console.log('Imagen: OKAY')}   
+                // console.log('OKAY')
+                // if(code){console.log('Codigo: OKAY')}
+                // if(nombre){console.log('Nombre: OKAY')}
+                // if(imagen){console.log('Imagen: OKAY')}   
                 // if(imagen){console.log(imagen.length)}
                 // Peticion ajax para saber si la partida existe
                 $.ajax({
@@ -155,7 +155,6 @@
                         peticion: 'salas',
                     },
                     method: 'GET',
-                    // headers: {"content-type": "application/json"}
                 }).done((data) => {
                     // console.log(JSON.parse(data));
                     // console.log(JSON.parse(data).length);
@@ -165,20 +164,24 @@
                                 pic: imagen,
                                 name: nombre
                             }
-                    console.log(dat2);
-                    if((JSON.parse(data).length) > 0){
-                        console.log('La partida indicada existe, se procederá a enviar los datos de creacion de usuario');
+                    // console.log(dat2);
+                    // console.log(data);
+                    if(JSON.parse(data)){
+                        console.log('La partida indicada existe, se procedera a enviar los datos de creacion de usuario');
                         $.ajax({
                             url: 'ajaxBDD.php',
                             data: dat2,
                             method: 'post'
                         }).done((data)=>{
-                            console.log(data);
+                            // console.log(data);
                             if(data == '"se inserto con exito <br>"'){alert('Datos enviados correctamente')}
                             // console.log(JSON.parse(data));
                         }).fail(()=>{
                             console.log('Error en la segunda peticion ajax')
                         })
+                    }else{
+                        console.log('La partida indicada no existe')
+                        alert('La partida indicada no existe, compruebe el codigo e intentelo de nuevo.')
                     }
                     //
                     // console.log('mensaje enviado 10/10');

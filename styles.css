@@ -76,7 +76,7 @@ input#nom{
     color: whitesmoke;
     font-family: 'Lora', serif;
 }
-.ok{
+.ok, .continue{
     position: absolute;
     bottom: 2em;
     right: 2em;
@@ -85,7 +85,10 @@ input#nom{
     border-radius: 10px;
     color: black;
 }
-.ok:active{
+.continue{
+    display: none;
+}
+.ok:active, .continue:active{
     background-color: #c4b097;
     bottom: 1.8em;
 }
@@ -142,7 +145,7 @@ input#nom{
     position: relative;
     background-color: #0008;
 }
-.persona>img{
+.persona>img , .linea>img{
     height: 5em;
     width: 5em;
     border-radius: 100%;
@@ -162,4 +165,10 @@ img.btnCerrar {
     width: 1.5em;
     top: 3%;
     right: 3%;
+}
+.linea{
+    background-color: #00000080;
+}
+.linea>p{
+    margin: auto 1em;
 }

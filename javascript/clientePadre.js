@@ -44,9 +44,10 @@ function cargarEventos(evento){
         // 
         // GENERAR EL CODIGO
         const code = generacionDelCodigo();
+        let partT = [];
         console.log(code);
         $('.code').html(code);
-        // grabarCodigo(code);
+        grabarCodigo(code);
 
         // ACTUALIZAR Y AÑADIR GENTE
         // ESCUCHADORES
@@ -65,10 +66,8 @@ function cargarEventos(evento){
         })
 
         // PRUEBA
-        //let participantes = [[],[]]
-        // let participantes = [["Agente 1", "Agente A", "AGENTE", "etnegA", "aGENTE CAPS", "Agenten't"],["https://picsum.photos/200/300", "https://picsum.photos/200/300", "https://picsum.photos/200/300", "https://picsum.photos/300/200", "https://picsum.photos/200/300", "https://picsum.photos/200/300"]]
-        let participantes = [["Agente 1", "https://picsum.photos/200/300"],["AGENTE", "https://picsum.photos/200/300"],["etnegA", "https://picsum.photos/200/300"],["aGENTE CAPS", "https://picsum.photos/200/300"],["Agenten't"]];
-        //fnCrearLista()
+        // ACTUALIZAR PJs TIMER
+        let timer = setInterval(actualizarPart, 5000, code);
 
         //the way we control that people appears only once per day
         //Para cada día:
@@ -150,17 +149,33 @@ function cargarEventos(evento){
         const sitios = ["una tienda de todo a 100 abandonada", "una casa-arbol", "un templo de dioses olvidados"];
 
 
-    function fnActualizarChat(){
-        console.log("imagen subida");
-        // $.ajax({
-        //     url: "chatlog.txt",
-        //     cache: false,
-        //     success: function(html){		
-        //         $(".chat")[0].html(html); //Insert chat log into the #chatbox div
-        //         console.log(html); //Insert chat log into the console.log
-        //     },
-        // });
+    function actualizarPart(codigo){
+        // console.log('actualizando...')
+        $.ajax({
+            url: 'ajaxBDD.php',/*Aquí iría el archivo PHP*/
+            method: 'GET',
+            // headers: {"content-type": "application/json"},
+            data: {
+                code: codigo,
+                peticion: 'personas'
+            }
+        }).done((data) => {
+            let datos = JSON.parse(data);
+            // console.log(datos);
+            if(datos.length>0){
+                datos.forEach((obj, ind)=>{
+                    if(!partT.some(pj => pj.id === obj.id)){
+                        partT.push(obj);
+                        fnActualizarLista(obj.nombre, obj.pic);
+                    }
+                })
+            }
+            // console.log('Codigo enviado correctamente');
+        }).fail(() => {
+            console.log('Error, el codigo no ha podido ser enviado')
+        })
     }
+    // Funcion no necesaria para nada
     function fnCrearLista(){
         const cont = $(".showpeople")[0]
         //
@@ -260,7 +275,9 @@ function cargarEventos(evento){
     function fnStartGame(){
         // Vaciar el array por si acaso
         arrayDeJuego = [];
-        //Llenado de datos a la tabla
+        // Detener el escuchador de PJs
+        clearInterval(timer);
+        //Llenado de datos a la tabla(el array de juego)
         for(let i = 0; i<$(".equipo").length; i++){
             for(let j=0; j<$(".equipo")[i].children.length; j++){
                 let persona = $(".equipo")[i].children[j]
@@ -314,12 +331,12 @@ function cargarEventos(evento){
     }
     function grabarCodigo(codigo){
         $.ajax({
-            url: '',/*Aquí iría el archivo PHP*/
+            url: 'ajaxBDD.php',/*Aquí iría el archivo PHP*/
             method: 'POST',
-            headers: {"content-type": "application/json"},
-            data: JSON.stringify({
+            data: {
                 code: codigo,
-            })
+                peticion: 'crearSala',
+            }
         }).done((data) => {
                 //controlar no solo que la coneccion haya ido bien sino tambien que nos devuelva la respuesta correcta o un mensaje de "error, fallo en la coneccion con la BDD"
                 console.log(data);
@@ -330,7 +347,7 @@ function cargarEventos(evento){
     }
     function comprobarNuevosJugadores(codigo){
         $.ajax({
-            url: '',/*Aquí iría el archivo PHP*/
+            url: 'ajaxBDD.php',/*Aquí iría el archivo PHP*/
             method: 'GET',
             headers: {"content-type": "application/json"},
             data: JSON.stringify({

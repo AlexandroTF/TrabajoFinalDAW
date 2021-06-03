@@ -31,6 +31,8 @@ if($_SERVER["REQUEST_METHOD"] == 'GET'){
         // Aqui debería devolver un objeto estandar con el valor ok si ha sido exitosa la peticion y con mensajes de error si ha fracasado
     }
 }elseif($_SERVER["REQUEST_METHOD"] == 'POST'){
+	
+	echo json_encode($_POST);
     // COMPROBAMOS LOS DATOS QUE NOS HAN PASADO
     if(isset($_POST['code'])){ $code = $_POST['code'];}
     if(isset($_POST['peticion'])){ $peticion = $_POST['peticion'];}
@@ -208,7 +210,12 @@ function fnResponderPartidas($codigo){
     // Accede a la BDD y responde con un array de todos los webhooks de esa sala (idealmente no habría mas que una)
 	$obj = conectaBD::singleton();
 	$mis_WHs = $obj->consultaPartidas($codigo);
-	return $mis_WHs;
+	// return $mis_WHs;
+	if(count($mis_WHs)>0){
+		return true;
+	}else{
+		return false;
+	}
     $resp = new Respuesta();
     // 
     return $resp;

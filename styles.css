@@ -172,3 +172,11 @@ img.btnCerrar {
 .linea>p{
     margin: auto 1em;
 }
+/* .linea {
+    background-color: rgba(0,0,0,0.3);
+    display: block;
+    height: 3em;
+}
+.linea > p {
+    display: inline;
+} */

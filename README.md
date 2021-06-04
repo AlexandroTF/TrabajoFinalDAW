@@ -11,8 +11,13 @@
 - **Bibliografía:** enumeración de los recursos de los que te hayas valido para realizar el proyecto: libros, artículos, páginas web, etc. Indica siempre la fecha, autor, título y editorial, revista o URL.
 
 # Battle Simulator Bot for Giveaways.
-
+<!-- 
 ## Portada
+### Battle Simulator Bot for Giveaways. -->
+##### Alumno: Alexandro Tejada Flores
+##### Tutores: Fran y Raúl
+###### IES Enrique Tierno Galvan, Madrid, España.
+###### Lunes 7 de Junio de 2021.
 
 ## Índice
  - Introducción
@@ -106,3 +111,7 @@ Al intentar enviar imagenes por ajax me di cuenta de que por las peticiones ajax
 La solucion fue precisamente esta segunda opcion, convertir las imagenes a base64 y almacenar el texto resultado en la base de datos.
 
 Un segundo problema encontrado fue
+
+## Trabajo futuro
+Como trabajo futuro se han planeado numerosas funcionalidades que añadir.
+ - La inclusion de mas plataformas con las que conectar el  

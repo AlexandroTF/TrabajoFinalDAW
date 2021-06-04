@@ -45,6 +45,8 @@ function cargarEventos(evento){
         // GENERAR EL CODIGO
         const code = generacionDelCodigo();
         let partT = [];
+        let arrWHs = [];
+        // let idDefaultImage = 0;
         console.log(code);
         $('.code').html(code);
         grabarCodigo(code);
@@ -58,31 +60,41 @@ function cargarEventos(evento){
             // Hacer esto con un modal si es posible
             let nombre = prompt("Nombre");
             let imagen = prompt("ruta imagen");
-            participantes[0][participantes[0].length] = nombre;
-            participantes[1][participantes[1].length] = imagen;
+            if(imagen == ""){
+                // idDefaultImage += 1;
+                let idDefaultImage = Math.floor(Math.random()*1085);
+                imagen = "https://picsum.photos/id/" + idDefaultImage + "/200"}
+            // participantes[0][participantes[0].length] = nombre;
+            // participantes[1][participantes[1].length] = imagen;
             fnActualizarLista(nombre, imagen);
             //console.log(participantes)
             //fnActualizarLista();
         })
 
-        // PRUEBA
         // ACTUALIZAR PJs TIMER
-        let timer = setInterval(actualizarPart, 5000, code);
+        let timerPJ = setInterval(actualizarPart, 5000, code);
+        // ACTUALIZAR HWs TIMER
+        // let timerWH = setInterval(actualizarWH, 5000, code);
 
         //the way we control that people appears only once per day
         //Para cada día:
         function fnNuevoDia(){
+            actualizarWH();
             console.log('Empieza un nuevo día');
             $('.showpeople').html('');
             let personasPorInteractuar = new Array;
             arrayDeJuego.forEach(p => {
                 if(p.salud > 0){
                     personasPorInteractuar.push(p);
+                    // console.log(p)
                 }
             });
+            if(personasPorInteractuar.length <= 1){
+                // REVISAR MOSTRAR EL MENSAJE ADECUADAMENTE
+                console.log('No pues ya ganó, neta')
+                alert('No pues ya ganó, neta')
+            }
             personasPorInteractuar = personasPorInteractuar.sort((a, b) => 0.5 - Math.random());
-            // console.log('Array de gente viva que juega');
-            // console.log(personasPorInteractuar);
 
             while(personasPorInteractuar.length > 0){
                 let currentPJ = personasPorInteractuar.pop();
@@ -90,7 +102,10 @@ function cargarEventos(evento){
                 // console.log(currentPJ);
                 // randomizar eventos, o no
                 let nEvento = Math.floor(Math.random()*3);
-                if(personasPorInteractuar.length < 2){ nEvento = Math.floor(Math.random()*2) }
+                if(personasPorInteractuar.length < 1){
+                    nEvento = Math.floor(Math.random()*2);
+                }
+                console.log(personasPorInteractuar.length);
                 switch(nEvento){
                     case 0:
                         // console.log(currentPJ);
@@ -105,10 +120,10 @@ function cargarEventos(evento){
                     case 2:
                         // console.log(currentPJ);
                         secondPJ = personasPorInteractuar.pop();
-                        // currentPJ.salud -= 2;
-                        // secondPJ.salud -= 3;
-                        console.log(arrayDeJuego.indexOf(currentPJ));
-                        console.log(arrayDeJuego[arrayDeJuego.indexOf(currentPJ)]);
+                        currentPJ.salud -= 2;
+                        secondPJ.salud -= 3;
+                        // console.log(arrayDeJuego.indexOf(currentPJ));
+                        // console.log(arrayDeJuego[arrayDeJuego.indexOf(currentPJ)]);
                         console.log(currentPJ.nombre + " se ha encontrado con " + secondPJ.nombre);
                         showMsg(' se ha encontrado con ', currentPJ, secondPJ);
                         break;
@@ -122,6 +137,24 @@ function cargarEventos(evento){
         function showMsg(text, p1, p2){
             const campo = $('.showpeople');
             let texto = (text, p1, p2) => {
+                if(p2){
+                    return `
+                    <div class="linea">
+                    <img src='${p1.imagen}'><p>${p1.nombre}
+                    ${text}</p>
+                    <img src='${p2.imagen}'><p>${p2.nombre}</p>
+                    </div>
+                    `;
+                }else{
+                    return `
+                    <div class="linea">
+                    <img src='${p1.imagen}'><p>${p1.nombre}
+                    ${text}</p>
+                    </div>
+                    `;
+                }
+            }
+            let paraWebHooks = (text, p1, p2) => {
                 if(p2){
                     return `
                     <div class="linea">
@@ -168,6 +201,31 @@ function cargarEventos(evento){
                         partT.push(obj);
                         fnActualizarLista(obj.nombre, obj.pic);
                     }
+                })
+            }
+            // console.log('Codigo enviado correctamente');
+        }).fail(() => {
+            console.log('Error, el codigo no ha podido ser enviado')
+        })
+    }
+    function actualizarWH(codigo){
+        // console.log('actualizando...')
+        $.ajax({
+            url: 'ajaxBDD.php',/*Aquí iría el archivo PHP*/
+            method: 'GET',
+            // headers: {"content-type": "application/json"},
+            data: {
+                code: codigo,
+                peticion: 'webhooks'
+            }
+        }).done((data) => {
+            let datos = JSON.parse(data);
+            // console.log(datos);
+            if(datos.length>0){
+                arrWHs = [];
+                datos.forEach((obj, ind)=>{
+                    // REVISAR SI ERA OBJ.URL
+                    arrWHs.push(obj.url);
                 })
             }
             // console.log('Codigo enviado correctamente');
@@ -276,7 +334,7 @@ function cargarEventos(evento){
         // Vaciar el array por si acaso
         arrayDeJuego = [];
         // Detener el escuchador de PJs
-        clearInterval(timer);
+        clearInterval(timerPJ);
         //Llenado de datos a la tabla(el array de juego)
         for(let i = 0; i<$(".equipo").length; i++){
             for(let j=0; j<$(".equipo")[i].children.length; j++){
@@ -562,6 +620,35 @@ function cargarEventos(evento){
 
     }
 
+// arrFnAtaque[Math.floor(Math.random()*arrFnAtaque.length)](persona1, persona2);
+let arrFnAtaque = [];
+arrFnAtaque[arrFnAtaque.length] = (p1, p2) => {
+    // funcion de ataque a distancia
+    // P1 hiere a P2 a distancia
+    p2.salud -= 2;
+    if(p2.salud > 0){
+        return p1.nombre + ' le lanzó una piedra a ' + p2.nombre;
+    }
+    return p1.nombre + ' mató a ' + p2.nombre
+}
+arrFnAtaque[arrFnAtaque.length] = (p1, p2) => {
+    // funcion de ataque
+    // P1 hiere a P2 y viceversa
+    p1.salud -= 2;
+    p2.salud -= 2;
+    if(p2.salud > 0){
+        if(p1.salud > 0){
+            return p1.nombre + ' intentó atacar por sorpresa a  ' + p2.nombre + ' pero no salio tan bien';
+        }else{
+            return p1.nombre + ' intentó atacar por sorpresa a  ' + p2.nombre + ' pero no salio tan bien, murieron';
+        }
+    }
+    if(p1.salud > 0){
+        return p1.nombre + ' intentó un ataque por sorpresa pero no salio tan bien, aun así consiguió matar a ' + p2.nombre;
+    }else{
+        return p1.nombre + ' intentó atacar por sorpresa a ' + p2.nombre + ' pero le salió fatal y murió';
+    }
+}
     //
     // https://codepen.io/airnan/full/PWmRMe
     // https://medium.com/davao-js/tutorial-creating-a-simple-discord-bot-9465a2764dc0

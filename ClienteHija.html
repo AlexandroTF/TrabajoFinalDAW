@@ -110,10 +110,10 @@
     <body>
         <div class="guest cont">
             <form method="GET" action="" enctype="multipart/form-data">
-                <input type="text" name="nom" id="nom">
+                <input type="text" name="nom" id="nom" placeholder="Nombre">
                 <br>
                 <div class="upload">
-                    <label name="avatar"><img id="imagen" src="C:/Users/Desarrollo/Pictures/Imagenes%20de%20ejemplo/612-200x200.jpg"></label>
+                    <label name="avatar"><img id="imagen" src="img/849-200x200.jpg"></label>
                     <div id="btnsubir"></div>
                     <input type="file" id="avatar" name="avatar" accept="image/*">
                 </div>
@@ -174,7 +174,7 @@
                             method: 'post'
                         }).done((data)=>{
                             // console.log(data);
-                            if(data == '"se inserto con exito <br>"'){alert('Datos enviados correctamente')}
+                            alert('Datos enviados correctamente');
                             // console.log(JSON.parse(data));
                         }).fail(()=>{
                             console.log('Error en la segunda peticion ajax')

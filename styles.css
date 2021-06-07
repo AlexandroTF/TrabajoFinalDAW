@@ -172,11 +172,15 @@ img.btnCerrar {
 .linea>p{
     margin: auto 1em;
 }
-/* .linea {
-    background-color: rgba(0,0,0,0.3);
-    display: block;
-    height: 3em;
+.linea {
+    display: inherit;
+    width: 80%;
+    margin: 2em auto;
 }
 .linea > p {
     display: inline;
-} */
+    margin: auto;
+}
+.linea > img{
+    margin: auto;
+}

@@ -39,7 +39,7 @@ if($_SERVER["REQUEST_METHOD"] == 'GET'){
     if(isset($_POST['pic'])){ $foto = $_POST['pic'];}
     if(isset($_POST['name'])){ $nombre = $_POST['name'];}
     if(isset($_POST['urlwh'])){ $urlWH = $_POST['urlwh'];}
-    if($code !== null && $peticion !== null){
+    if(isset($code) && isset($peticion)){
         if(strcmp($peticion, 'crearSala') === 0){
             echo json_encode(fnCrearSala($code));
         }

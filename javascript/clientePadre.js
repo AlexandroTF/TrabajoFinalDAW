@@ -47,7 +47,7 @@ function cargarEventos(evento){
         let partT = [];
         let arrWHs = [];
         // let idDefaultImage = 0;
-        console.log(code);
+        // console.log(code);
         $('.code').html(code);
         grabarCodigo(code);
 
@@ -79,7 +79,7 @@ function cargarEventos(evento){
         //the way we control that people appears only once per day
         //Para cada día:
         function fnNuevoDia(){
-            actualizarWH();
+            actualizarWH(code);
             console.log('Empieza un nuevo día');
             $('.showpeople').html('');
             let personasPorInteractuar = new Array;
@@ -90,45 +90,53 @@ function cargarEventos(evento){
                 }
             });
             if(personasPorInteractuar.length <= 1){
-                // REVISAR MOSTRAR EL MENSAJE ADECUADAMENTE
-                console.log('No pues ya ganó, neta')
-                alert('No pues ya ganó, neta')
-            }
-            personasPorInteractuar = personasPorInteractuar.sort((a, b) => 0.5 - Math.random());
-
-            while(personasPorInteractuar.length > 0){
-                let currentPJ = personasPorInteractuar.pop();
-                let secondPJ;
-                // console.log(currentPJ);
-                // randomizar eventos, o no
-                let nEvento = Math.floor(Math.random()*3);
-                if(personasPorInteractuar.length < 1){
-                    nEvento = Math.floor(Math.random()*2);
+                // Fin de la partida
+                if(personasPorInteractuar.length == 1){
+                    // Persona ganadora
+                    console.log('Tenemos una persona ganadora !!!');
+                    alert('Tenemos una persona ganadora !!!');
+                    let currentPJ = personasPorInteractuar.pop();
+                    showMsg(' ha ganado !!', currentPJ);
+                }else{
+                    console.log('Parece que no ha ganado nadie');
+                    alert('Parece que no ha ganado nadie, las dos ultimas personas han muerto en el ultimo enfrentamiento');
                 }
-                console.log(personasPorInteractuar.length);
-                switch(nEvento){
-                    case 0:
-                        // console.log(currentPJ);
-                        console.log(currentPJ.nombre + " simplemente espera y sobrevive");
-                        showMsg(' simplemente espera y sobrevive', currentPJ);
-                        break;
-                    case 1:
-                        // console.log(currentPJ);
-                        console.log(currentPJ.nombre + " encuentra algo");
-                        showMsg(' encuentra algo', currentPJ);
-                        break;
-                    case 2:
-                        // console.log(currentPJ);
-                        secondPJ = personasPorInteractuar.pop();
-                        currentPJ.salud -= 2;
-                        secondPJ.salud -= 3;
-                        // console.log(arrayDeJuego.indexOf(currentPJ));
-                        // console.log(arrayDeJuego[arrayDeJuego.indexOf(currentPJ)]);
-                        console.log(currentPJ.nombre + " se ha encontrado con " + secondPJ.nombre);
-                        showMsg(' se ha encontrado con ', currentPJ, secondPJ);
-                        break;
-                    default:
-                        console.log('Error, ha sucedido un fallo inexplicable.')
+                $('.continue').html('Volver a jugar')
+                $('.continue').on('click', ()=>{location.reload();})
+            }else{
+                personasPorInteractuar = personasPorInteractuar.sort((a, b) => 0.5 - Math.random());
+    
+                while(personasPorInteractuar.length > 0){
+                    let currentPJ = personasPorInteractuar.pop();
+                    let secondPJ;
+                    // console.log(currentPJ);
+                    // randomizar eventos, o no
+                    let nEvento = Math.floor(Math.random()*3);
+                    if(personasPorInteractuar.length < 1){
+                        nEvento = Math.floor(Math.random()*2);
+                    }
+                    // console.log(personasPorInteractuar.length);
+                    switch(nEvento){
+                        case 0:
+                            // console.log(currentPJ);
+                            let mensaje = arrFnNeutra[MathMath.floor(Math.random()*arrFnNeutra.length)](currentPJ);
+                            showMsg(mensaje, currentPJ);
+                            break;
+                        case 1:
+                            // console.log(currentPJ);
+                            secondPJ = personasPorInteractuar.pop();
+                            let mensaje = arrFnPositiva[MathMath.floor(Math.random()*arrFnPositiva.length)](currentPJ);
+                            showMsg(mensaje, currentPJ);
+                            break;
+                        case 2:
+                            // console.log(currentPJ);
+                            secondPJ = personasPorInteractuar.pop();
+                            let mensaje = arrFnAtaque[MathMath.floor(Math.random()*arrFnAtaque.length)](currentPJ, secondPJ);
+                            showMsg(mensaje, currentPJ, secondPJ);
+                            break;
+                        default:
+                            console.log('Error, ha sucedido un fallo inexplicable.')
+                    }
                 }
             }
             // eventoEncontrarAlguien(currentPJ);
@@ -140,16 +148,16 @@ function cargarEventos(evento){
                 if(p2){
                     return `
                     <div class="linea">
-                    <img src='${p1.imagen}'><p>${p1.nombre}
-                    ${text}</p>
-                    <img src='${p2.imagen}'><p>${p2.nombre}</p>
+                    <img src='${p1.imagen}'>
+                    <p>${text}</p>
+                    <img src='${p2.imagen}'>
                     </div>
                     `;
                 }else{
                     return `
                     <div class="linea">
-                    <img src='${p1.imagen}'><p>${p1.nombre}
-                    ${text}</p>
+                    <img src='${p1.imagen}'>
+                    <p>${text}</p>
                     </div>
                     `;
                 }
@@ -213,7 +221,6 @@ function cargarEventos(evento){
         $.ajax({
             url: 'ajaxBDD.php',/*Aquí iría el archivo PHP*/
             method: 'GET',
-            // headers: {"content-type": "application/json"},
             data: {
                 code: codigo,
                 peticion: 'webhooks'
@@ -358,7 +365,7 @@ function cargarEventos(evento){
             }, 400);
         }
         fnCompletarPersonas()
-        console.log(arrayDeJuego)
+        // console.log(arrayDeJuego)
         // Aqui empezaría el juego o algo así
     }
     //llena a las personas con sus amistades(añade a sus compas de equipo a amigos)
@@ -397,7 +404,7 @@ function cargarEventos(evento){
             }
         }).done((data) => {
                 //controlar no solo que la coneccion haya ido bien sino tambien que nos devuelva la respuesta correcta o un mensaje de "error, fallo en la coneccion con la BDD"
-                console.log(data);
+                // console.log(data);
                 console.log('Codigo enviado correctamente');
         }).fail(() => {
             console.log('Error, el codigo no ha podido ser enviado')
@@ -419,7 +426,7 @@ function cargarEventos(evento){
                 if(datos.nuevos != null){
                     // fnActualizarLista(nombre, imagen)
                 }
-                console.log(data);
+                // console.log(data);
                 console.log('Codigo enviado correctamente');
         }).fail(() => {
             console.log('Error, el codigo no ha podido ser enviado')
@@ -622,6 +629,8 @@ function cargarEventos(evento){
 
 // arrFnAtaque[Math.floor(Math.random()*arrFnAtaque.length)](persona1, persona2);
 let arrFnAtaque = [];
+let arrFnPositiva = [];
+let arrFnNeutra = [];
 arrFnAtaque[arrFnAtaque.length] = (p1, p2) => {
     // funcion de ataque a distancia
     // P1 hiere a P2 a distancia
@@ -648,6 +657,65 @@ arrFnAtaque[arrFnAtaque.length] = (p1, p2) => {
     }else{
         return p1.nombre + ' intentó atacar por sorpresa a ' + p2.nombre + ' pero le salió fatal y murió';
     }
+}
+arrFnAtaque[arrFnAtaque.length] = (p1, p2) => {
+    // funcion de ataque
+    // Luchan por una objeto de cura
+    p1.salud -= 2;
+    p2.salud -= 2;
+    if(p1.salud <=0 && p2.salud > 0){
+        p2.salud += 3;
+        return p1.nombre + ' lucho contra ' + p2.nombre + ' por objetos de curacion pero murió en el combate';
+    }
+    if(p2.salud <= 0 && p1.salud > 0){
+        p1.salud += 3;
+        return p1.nombre + ' lucho contra ' + p2.nombre + ' por objetos de curacion y consiguio matar a ' + p2.nombre;
+    }
+    if(p2.salud <= 0 && p1.salud <= 0){
+        return p1.nombre + ' lucho contra ' + p2.nombre + ' por objetos de curacion pero murieron en el combate';
+    }
+    if(p2.salud > 0 && p1.salud > 0){
+        let coin = Math.floor(Math.random()*2);
+        if(coin == 0){
+            p1.salud += 3;
+            return p1.nombre + ' lucho contra ' + p2.nombre + ' por objetos de curacion y consiguio ganar aunque no matar';
+        }else{
+            p1.salud += 3;
+            return p1.nombre + ' lucho contra ' + p2.nombre + ' por objetos de curacion y consiguio sobrevivir aunque no ganar';
+        }
+    }
+}
+arrFnAtaque[arrFnAtaque.length] = (p1, p2) => {
+    // funcion de ataque
+    // Pide que lo mate pero se niega
+    return p1.nombre + ' le pide a ' + p2.nombre + ' que acabe con su sufrimiento pero ' + p2.nombre + 'se niega';
+}
+arrFnPositiva[arrFnPositiva.length] = (p1) => {
+    p1.salud += 1;
+    return p1.nombre + ' encontró un objeto de curación pequeño';
+}
+arrFnPositiva[arrFnPositiva.length] = (p1) => {
+    p1.salud += 2;
+    return p1.nombre + ' encontró un objeto de curación mediano';
+}
+arrFnPositiva[arrFnPositiva.length] = (p1) => {
+    p1.salud += 3;
+    return p1.nombre + ' encontró un objeto de curación grande';
+}
+arrFnNeutra[arrFnNeutra.length] = (p1) => {
+    p1.salud -= 1;
+    return p1.nombre + ' se tropezo bajando una ladera';
+}
+arrFnNeutra[arrFnNeutra.length] = (p1) => {
+    return p1.nombre + ' espera pacientemente a que acabe el día';
+}
+arrFnNeutra[arrFnNeutra.length] = (p1) => {
+    p1.salud -= 1;
+    return p1.nombre + ' comio comida en mal estado';
+}
+arrFnNeutra[arrFnNeutra.length] = (p1) => {
+    p1.salud -= 1;
+    return p1.nombre + ' comio comida en mal estado';
 }
     //
     // https://codepen.io/airnan/full/PWmRMe

@@ -1,46 +1,36 @@
-## Estructura general del documento
-
-- **Portada:** debe mostrar el título, autor, tutor, ciclo, centro y fecha.
-- **Índice**
-- **Introducción:** Comienza con una motivación del proyecto (por qué es importante; vende tu proyecto), una visión general de los objetivos del mismo, tecnologías utilizadas, etc.
-- **Planificación y seguimiento:** realiza una planificación temporal que cubra el periodo del proyecto, indicando los hitos (*milestones*) importantes que prevés, así como el seguimiento del mismo. Sírvete de algún sistema visual de panificación, como diagramas de gantt o tableros SCRUM/Kanban, documentando todo el proceso.
-- **Cuerpo del documento:** estructura tu proyecto con las secciones que necesites y añádelas aquí (ej: revisión de tecnologías, integración de servicios, estructura principal del código, diagramas UML de clases/secuencia, despliegue de la aplicación, esquema ER de la base de datos...)
-- **Conclusiones:** comenta el resumen de los principales logros y aportaciones de tu trabajo, observaciones, dificultades encontradas, etc.
-- **Trabajo futuro:** en base a tu experiencia, realiza sugerencias de trabajo futuro que se podría seguir realizando para expandir el proyecto.
-- **Anexos:** expón aquí cualquier contenido que rompiese el flujo normal del documento en las secciones previas, como diagramas adicionales, documentación de APIs, materiales adicionales, etc. Esta es la única sección prescindible que puede no aparecer si no la necesitas.
-- **Bibliografía:** enumeración de los recursos de los que te hayas valido para realizar el proyecto: libros, artículos, páginas web, etc. Indica siempre la fecha, autor, título y editorial, revista o URL.
-
 # Battle Simulator Bot for Giveaways.
-<!-- 
-## Portada
-### Battle Simulator Bot for Giveaways. -->
+
 ##### Alumno: Alexandro Tejada Flores
-##### Tutores: Fran y Raúl
+##### Tutores: Francisco José Garrido Estevez y Raúl Gallego Pastor
 ###### IES Enrique Tierno Galvan, Madrid, España.
 ###### Lunes 7 de Junio de 2021.
 
-## Índice
- - Introducción
- - Planificación y seguimiento
- - Cuerpo del documento
- - Conclusiones
- - Trabajo futuro
- - Anexos
- - Bibliografía
-
 ## Introducción
-_Battle Simulator Bot for Giveaways_ es un proyecto orientado al entretenimiento online, sirve para gestionar sorteos con una capa de ludificación haciendo que sea a su vez material de entretenimiento.
-Está pensada para que creadores de contenido online gestionen sorteos o lo usen como mero sistema de entretenimiento.
-
-#### Como surgió la idea?
-La idea del proyecto surgio resultado de unificar funcionalidades que yo quería conocer y aprender a usar por un lado y por el otro la observacion de una herramienta similar pero carencia de determinadas caracteristicas. Las funcionalidades que yo buscaba conocer y aprender a usar eran los bots de distintas plataformas: twitter, discord, telegram, entre otros.
-La herramienta similar es hunger games simulator , una pagina web en la que se narran por texto batallas simuladas entre los participantes designados.
-La particularidad de hunger games simulator es que unicamente puede añadir los participantes la persona que accede a la pagina, es decir, todo es local y sin embargo he visto a lo largo del tiempo gente que lo usa como entretenimiento simulando batallas con amigos o gente a la que conoce por redes sociales además de conocer a al menos un creador de contenido en internet que hace retransmisiones que ocasionalmente usa la pagina para hacer un sorteo. Al ser tan local se tienen que introducir todos los participantes uno a uno, es por eso que nace este proyecto, una herramienta similar con mejoras, la principal es la posibilidad de añadir participantes de forma remota aunque
-
-#### Una visión general de los objetivos del mismo
- - Crear una aplicacion web que simule batallas todos contra todos
- - Permitir a otros usuarios introducir participantes desde otro dispositivo a una misma partida
- - Narrar la simulación no solo en la pantalla de la persona que creó la partida sino tambien es distintas aplicaciones gracias a bots
+_Battle Simulator Bot for Giveaways_ es un proyecto orientado al entretenimiento
+online, sirve para gestionar sorteos con una capa de ludificación haciendo
+que sea a su vez material de entretenimiento.
+Está pensada para que creadores de contenido online, principalmente en
+retransmisiones en directo, gestionen sorteos o lo usen como mero sistema
+de entretenimiento.
+La aplicación está pensada para funcionar tal que la persona creadora de
+contenido enseña a su público la página web desde su pantalla mientras crea
+la sala. El público entra a su vez en la página, pulsa en el botón para unirse a
+una sala, introduce su nombre y su imagen y las envía indicando el código
+que ha visto en la pantalla de la persona creadora de contenido. En ese
+momento o pocos instantes después aparecería el nombre y la imagen
+enviados en la pantalla de la persona creadora de contenido, donde se podría
+comprobar si algún dato se ha introducido de forma errónea por acción del
+usuario. La persona creadora de contenido, al poder eliminar de la lista de los
+usuarios, puede ordenarlos para formar los equipos que desee o incluso jugar
+con equipos de 2 personas antes de que la funcionalidad de los ajustes de
+partida esté disponible. Una vez se muestran todos los participantes, quien
+creó la sala pulsará el botón de comenzar y el de continuar para que vayan
+apareciendo por pantalla los mensajes de las interacciones entre
+participantes mientras se va comentando entre el público y la persona
+creadora de contenido. Cuando se termine el juego saldrá un mensaje con la
+persona ganadora y la creadora de contenido se encargará de darle el premio
+del sorteo en el caso de que haya estado usando la aplicación para sortear
+algo.
 
 #### Tecnologías utilizadas
  - HTML y CSS
@@ -56,23 +46,7 @@ La particularidad de hunger games simulator es que unicamente puede añadir los 
  - Github
  - Visual Studio Code
 
-## Planificación y seguimiento
-
-#### Planificación
-El desarrollo del proyecto se divirá en 3 secciones
- - Diseño
- - Producción
- - Comprobación y corrección de errores
-El diseño ocupará las primeras 3 semanas, es decir, del 12 de abril al 2 de mayo aproximadamente.
-La produccion ocupará el las siguientes 4 semanas, es decir, del 3 de mayo al 30 de mayo aproximadamente.
-La comprobacion y correccion de errores ocupará unicamente la ultima semana, es decir del 31 de mayo al 6 de junio.
-
-#### Seguimiento
-La primera etapa, la de diseño, ha cumplido los tiempos previstos, dejando espacio para desarrollar incluso la interfaz de las paginas web.
-La segunda etapa, la de producción, se ha ralentizado las primeras 2 semanas y se ha alargado ocupando parte del tiempo de la fase de comprobacion de errores, parte de este retraso se ha debido a una reestructuración de la base de datos.
-
 ## Cuerpo del documento
-(ej: revisión de tecnologías, integración de servicios, estructura principal del código, diagramas UML de clases/secuencia, despliegue de la aplicación, esquema ER de la base de datos...)
  - MasterJs
      - Ajax
          - RecibirPJs
@@ -99,19 +73,12 @@ La segunda etapa, la de producción, se ha ralentizado las primeras 2 semanas y 
      - Comando
      - Crear WH y enviarlo
 
-## Conclusiones
-<!-- cosas conseguidas, inconvenientes encontrados, etc. -->
-En este proyecto se ha conseguido conectar correctamente la base de datos con el archivo PHP
-#### Problemas encontrados
-A lo largo del desarrollo del proyecto se han encontrado diversos problemas como los que vamos a listar a continuación
-###### Enviar imagenes desde clienteHija por ajax
-Al intentar enviar imagenes por ajax me di cuenta de que por las peticiones ajax solo permiten el envio de informacion como una cadena de texto plano por lo que en caso de ser un url a una imagen de internet no habría problema puesto que sería una url pero al ser un archivo no funcionaría igual. Se plantearon 2 soluciones:
- - Enviar las imagenes al servidor como archivo y almacenarla ahí, tambien guardar en la base de datos la ruta del servidor donde se encuentra la imagen
- - Transformar las imagenes a Base64 que es texto plano que se puede almacenar facilmente en variables.
-La solucion fue precisamente esta segunda opcion, convertir las imagenes a base64 y almacenar el texto resultado en la base de datos.
-
-Un segundo problema encontrado fue
-
 ## Trabajo futuro
 Como trabajo futuro se han planeado numerosas funcionalidades que añadir.
- - La inclusion de mas plataformas con las que conectar el  
+ - Mejorar la interfaz al crear participantes desde la pantalla de juego.
+ - La inclusión de más plataformas con las que conectar el envío de mensajes (Telegram, Twitter, Twitch, Instagram, Youtube, etc).
+ - Añadir mayor complejidad a los participantes y a sus interacciones ya sean un inventario de recursos y armas, la agresividad, intercambios de recursos y hacer alianzas.
+ - Crear un enlace que se muestre en la pantalla principal que permita unirse directamente sin tener que indicar aparte el código de la sala.
+ - Traducir los textos de la aplicación a diferentes idiomas como el inglés o el catalán
+ - Añadir una pantalla de configuración para la pantalla de juego en la que antes de empezar se podrán cambiar variables como la hostilidad (reduce la probabilidad de encuentros en los que la gente no se ataca e incrementa la de los encuentros en los que hay combate), la probabilidad para encontrar recursos o la probabilidad de que se cruzan varios jugadores (independientemente de si en con intención hostil o no).
+ - Añadir un registro al finalizar el sorteo para ver qué ha hecho cada participante, quien ha hecho más cantidad de daño o menos cantidad de daño para otorgarles un título.

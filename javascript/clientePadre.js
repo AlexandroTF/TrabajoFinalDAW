@@ -109,6 +109,7 @@ function cargarEventos(evento){
                 while(personasPorInteractuar.length > 0){
                     let currentPJ = personasPorInteractuar.pop();
                     let secondPJ;
+                    let mensaje = '';
                     // console.log(currentPJ);
                     // randomizar eventos, o no
                     let nEvento = Math.floor(Math.random()*3);
@@ -119,19 +120,18 @@ function cargarEventos(evento){
                     switch(nEvento){
                         case 0:
                             // console.log(currentPJ);
-                            let mensaje = arrFnNeutra[MathMath.floor(Math.random()*arrFnNeutra.length)](currentPJ);
+                            mensaje = arrFnNeutra[Math.floor(Math.random()*arrFnNeutra.length)](currentPJ);
                             showMsg(mensaje, currentPJ);
                             break;
                         case 1:
                             // console.log(currentPJ);
-                            secondPJ = personasPorInteractuar.pop();
-                            let mensaje = arrFnPositiva[MathMath.floor(Math.random()*arrFnPositiva.length)](currentPJ);
+                            mensaje = arrFnPositiva[Math.floor(Math.random()*arrFnPositiva.length)](currentPJ);
                             showMsg(mensaje, currentPJ);
                             break;
                         case 2:
                             // console.log(currentPJ);
                             secondPJ = personasPorInteractuar.pop();
-                            let mensaje = arrFnAtaque[MathMath.floor(Math.random()*arrFnAtaque.length)](currentPJ, secondPJ);
+                            mensaje = arrFnAtaque[Math.floor(Math.random()*arrFnAtaque.length)](currentPJ, secondPJ);
                             showMsg(mensaje, currentPJ, secondPJ);
                             break;
                         default:
@@ -636,9 +636,9 @@ arrFnAtaque[arrFnAtaque.length] = (p1, p2) => {
     // P1 hiere a P2 a distancia
     p2.salud -= 2;
     if(p2.salud > 0){
-        return p1.nombre + ' le lanzó una piedra a ' + p2.nombre;
+        return p1.nombre + ' le lanz&oacute; una piedra a ' + p2.nombre;
     }
-    return p1.nombre + ' mató a ' + p2.nombre
+    return p1.nombre + ' mat&oacute; a ' + p2.nombre
 }
 arrFnAtaque[arrFnAtaque.length] = (p1, p2) => {
     // funcion de ataque
@@ -647,15 +647,15 @@ arrFnAtaque[arrFnAtaque.length] = (p1, p2) => {
     p2.salud -= 2;
     if(p2.salud > 0){
         if(p1.salud > 0){
-            return p1.nombre + ' intentó atacar por sorpresa a  ' + p2.nombre + ' pero no salio tan bien';
+            return p1.nombre + ' intent&oacute; atacar por sorpresa a  ' + p2.nombre + ' pero no salio tan bien';
         }else{
-            return p1.nombre + ' intentó atacar por sorpresa a  ' + p2.nombre + ' pero no salio tan bien, murieron';
+            return p1.nombre + ' intent&oacute; atacar por sorpresa a  ' + p2.nombre + ' pero no salio tan bien, murieron';
         }
     }
     if(p1.salud > 0){
-        return p1.nombre + ' intentó un ataque por sorpresa pero no salio tan bien, aun así consiguió matar a ' + p2.nombre;
+        return p1.nombre + ' intent&oacute; un ataque por sorpresa pero no salio tan bien, aun as&iacute; consigui&oacute; matar a ' + p2.nombre;
     }else{
-        return p1.nombre + ' intentó atacar por sorpresa a ' + p2.nombre + ' pero le salió fatal y murió';
+        return p1.nombre + ' intent&oacute; atacar por sorpresa a ' + p2.nombre + ' pero le sali&oacute; fatal y muri&oacute;';
     }
 }
 arrFnAtaque[arrFnAtaque.length] = (p1, p2) => {
@@ -665,57 +665,53 @@ arrFnAtaque[arrFnAtaque.length] = (p1, p2) => {
     p2.salud -= 2;
     if(p1.salud <=0 && p2.salud > 0){
         p2.salud += 3;
-        return p1.nombre + ' lucho contra ' + p2.nombre + ' por objetos de curacion pero murió en el combate';
+        return p1.nombre + ' luch&oacute; contra ' + p2.nombre + ' por objetos de curaci&oacute;n pero muri&oacute; en el combate';
     }
     if(p2.salud <= 0 && p1.salud > 0){
         p1.salud += 3;
-        return p1.nombre + ' lucho contra ' + p2.nombre + ' por objetos de curacion y consiguio matar a ' + p2.nombre;
+        return p1.nombre + ' luch&oacute; contra ' + p2.nombre + ' por objetos de curaci&oacute;n y consiguio matar a ' + p2.nombre;
     }
     if(p2.salud <= 0 && p1.salud <= 0){
-        return p1.nombre + ' lucho contra ' + p2.nombre + ' por objetos de curacion pero murieron en el combate';
+        return p1.nombre + ' luch&oacute; contra ' + p2.nombre + ' por objetos de curaci&oacute;n pero murieron en el combate';
     }
     if(p2.salud > 0 && p1.salud > 0){
         let coin = Math.floor(Math.random()*2);
         if(coin == 0){
             p1.salud += 3;
-            return p1.nombre + ' lucho contra ' + p2.nombre + ' por objetos de curacion y consiguio ganar aunque no matar';
+            return p1.nombre + ' luch&oacute; contra ' + p2.nombre + ' por objetos de curaci&oacute;n y consigui&oacute; ganar aunque no matar';
         }else{
             p1.salud += 3;
-            return p1.nombre + ' lucho contra ' + p2.nombre + ' por objetos de curacion y consiguio sobrevivir aunque no ganar';
+            return p1.nombre + ' luch&oacute; contra ' + p2.nombre + ' por objetos de curaci&oacute;n y consigui&oacute; sobrevivir aunque no ganar';
         }
     }
 }
 arrFnAtaque[arrFnAtaque.length] = (p1, p2) => {
     // funcion de ataque
     // Pide que lo mate pero se niega
-    return p1.nombre + ' le pide a ' + p2.nombre + ' que acabe con su sufrimiento pero ' + p2.nombre + 'se niega';
+    return p1.nombre + ' le pide a ' + p2.nombre + ' que acabe con su sufrimiento pero ' + p2.nombre + ' se niega';
 }
 arrFnPositiva[arrFnPositiva.length] = (p1) => {
     p1.salud += 1;
-    return p1.nombre + ' encontró un objeto de curación pequeño';
+    return p1.nombre + ' encontr&oacute; un objeto de curaci&oacute;n peque&ntilde;o';
 }
 arrFnPositiva[arrFnPositiva.length] = (p1) => {
     p1.salud += 2;
-    return p1.nombre + ' encontró un objeto de curación mediano';
-}
-arrFnPositiva[arrFnPositiva.length] = (p1) => {
-    p1.salud += 3;
-    return p1.nombre + ' encontró un objeto de curación grande';
+    return p1.nombre + ' encontr&oacute; un objeto de curaci&oacute;n mediano';
 }
 arrFnNeutra[arrFnNeutra.length] = (p1) => {
     p1.salud -= 1;
-    return p1.nombre + ' se tropezo bajando una ladera';
+    return p1.nombre + ' se tropez&oacute; bajando una ladera';
 }
 arrFnNeutra[arrFnNeutra.length] = (p1) => {
-    return p1.nombre + ' espera pacientemente a que acabe el día';
-}
-arrFnNeutra[arrFnNeutra.length] = (p1) => {
-    p1.salud -= 1;
-    return p1.nombre + ' comio comida en mal estado';
+    return p1.nombre + ' espera pacientemente a que acabe el d&iacute;a';
 }
 arrFnNeutra[arrFnNeutra.length] = (p1) => {
     p1.salud -= 1;
-    return p1.nombre + ' comio comida en mal estado';
+    return p1.nombre + ' comi&oacute; comida en mal estado';
+}
+arrFnNeutra[arrFnNeutra.length] = (p1) => {
+    p1.salud -= 1;
+    return p1.nombre + ' comi&oacute; comida en mal estado';
 }
     //
     // https://codepen.io/airnan/full/PWmRMe
